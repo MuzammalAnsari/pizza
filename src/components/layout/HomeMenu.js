@@ -1,4 +1,5 @@
 import Image from "next/image";
+import MenuItem from "../menu/MenuItems";
 
 
 export default function HomeMenu() {
@@ -15,6 +16,9 @@ export default function HomeMenu() {
             <div className="text-center">
                 <h3 className="uppercase text-gray-500 font-semibold leading-4">Check Out</h3>
                 <h2 className="text-primary font-bold text-4xl italic">Menu</h2>
+            </div>
+            <div className="grid grid-cols-3 gap-4">
+                <MenuItem />
             </div>
         </section>
     )

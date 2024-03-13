@@ -10,24 +10,24 @@ export default function RegisterPage() {
     const [creatingUser, setCreatingUser] = useState(false);
     const [userCreated, setUserCreated] = useState(false);
     const [error, setError] = useState(false);
-    // async function handleFormSubmit(ev) {
-    //     ev.preventDefault();
-    //     setCreatingUser(true);
-    //     setError(false);
-    //     setUserCreated(false);
-    //     const response = await fetch('/api/register', {
-    //         method: 'POST',
-    //         body: JSON.stringify({ email, password }),
-    //         headers: { 'Content-Type': 'application/json' },
-    //     });
-    //     if (response.ok) {
-    //         setUserCreated(true);
-    //     }
-    //     else {
-    //         setError(true);
-    //     }
-    //     setCreatingUser(false);
-    // }
+    async function handleFormSubmit(ev) {
+        ev.preventDefault();
+        // setCreatingUser(true);
+        // setError(false);
+        // setUserCreated(false);
+        const response = await fetch('/api/register', {
+            method: 'POST',
+            body: JSON.stringify({ email, password }),
+            headers: { 'Content-Type': 'application/json' },
+        });
+        // if (response.ok) {
+        //     setUserCreated(true);
+        // }
+        // else {
+        //     setError(true);
+        // }
+        // setCreatingUser(false);
+    }
     return (
         <section className="mt-8">
             <h1 className="text-center text-primary text-4xl mb-4">
@@ -46,9 +46,8 @@ export default function RegisterPage() {
                     Please try again later
                 </div>
             )} */}
-            {/* <form className="block max-w-xs mx-auto" onSubmit={handleFormSubmit}> */}
-            <form className="block max-w-xs mx-auto" >
-                {/* <input type="email" placeholder="email" value={email}
+            <form className="block max-w-xs mx-auto" onSubmit={handleFormSubmit}>
+                <input type="email" placeholder="email" value={email}
                     disabled={creatingUser}
                     onChange={ev => setEmail(ev.target.value)} />
                 <input type="password" placeholder="password" value={password}
@@ -56,16 +55,16 @@ export default function RegisterPage() {
                     onChange={ev => setPassword(ev.target.value)} />
                 <button type="submit" disabled={creatingUser}>
                     Register
-                </button> */}
+                </button>
                 <div className="my-4 text-center text-gray-500">
                     or login with provider
                 </div>
-                {/* <button
+                <button
                     onClick={() => signIn('google', { callbackUrl: '/' })}
                     className="flex gap-4 justify-center">
                     <Image src={'/google.png'} alt={''} width={24} height={24} />
                     Login with google
-                </button> */}
+                </button>
                 <div className="text-center my-4 text-gray-500 border-t pt-4">
                     Existing account?{' '}
                     <Link className="underline" href={'/login'}>Login here &raquo;</Link>

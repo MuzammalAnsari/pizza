@@ -8,7 +8,7 @@ const handler = NextAuth({
       credentials: {
         username: {
           label: "Email",
-          type: "text",
+          type: "email",
           placeholder: "test@example.com",
         },
         password: { label: "Password", type: "password" },

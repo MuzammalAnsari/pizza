@@ -6,14 +6,8 @@ import dotenv from 'dotenv';
 // Load environment variables from .env file
 dotenv.config();
 export async function POST(req) {
-    // mongoose.connect(process.env.MONGO_URL);
-    // const body = await req.json()
-    // const createdUser = await User.create(body)
-    // return Response.json(createdUser)
     try {
         // Connect to MongoDB using the MONGO_URL environment variable
-        console.log("MONGO_URL:", process.env.MONGO_URL);
-
         await mongoose.connect(process.env.MONGO_URL);
 
         // Parse JSON body from request

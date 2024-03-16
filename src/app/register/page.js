@@ -1,5 +1,5 @@
 "use client";
-// import { signIn } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -12,29 +12,28 @@ export default function RegisterPage() {
     const [error, setError] = useState(false);
     async function handleFormSubmit(ev) {
         ev.preventDefault();
-        // setCreatingUser(true);
-        // setError(false);
-        // setUserCreated(false);
-        // const response =
-        await fetch('/api/register', {
+        setCreatingUser(true);
+        setError(false);
+        setUserCreated(false);
+        const response = await fetch('/api/register', {
             method: 'POST',
             body: JSON.stringify({ email, password }),
             headers: { 'Content-Type': 'application/json' },
         });
-        // if (response.ok) {
-        //     setUserCreated(true);
-        // }
-        // else {
-        //     setError(true);
-        // }
-        // setCreatingUser(false);
+        if (response.ok) {
+            setUserCreated(true);
+        }
+        else {
+            setError(true);
+        }
+        setCreatingUser(false);
     }
     return (
         <section className="mt-8">
             <h1 className="text-center text-primary text-4xl mb-4">
                 Register
             </h1>
-            {/* {userCreated && (
+            {userCreated && (
                 <div className="my-4 text-center">
                     User created.<br />
                     Now you can{' '}
@@ -46,7 +45,7 @@ export default function RegisterPage() {
                     An error has occurred.<br />
                     Please try again later
                 </div>
-            )} */}
+            )}
             <form className="block max-w-xs mx-auto" onSubmit={handleFormSubmit}>
                 <input type="email" placeholder="email" value={email}
                     disabled={creatingUser}

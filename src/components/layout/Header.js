@@ -6,6 +6,11 @@ export default function Header() {
     const session = useSession()
     console.log(session)
     const status = session.status
+    const userData = session.data?.user
+    let userName = userData?.name || userData?.email
+    if (userName && userName.includes(' ')) {
+        userName = userName.split(' ')[0]
+    }
     return (
         <header className="flex items-center justify-between">
             <Link className="text-primary font-semibold text-2xl" href=""> ST PIZZA</Link>
@@ -17,11 +22,16 @@ export default function Header() {
             </nav>
             <nav className='flex items-center gap-4 text-gray-500 font-semibold'>
                 {status === 'authenticated' && (
-                    <button
-                        onClick={() => signOut()}
-                        href={'/register'} className='bg-primary rounded-full px-8 text-white py-2 '>
-                        Logout
-                    </button>
+                    <>
+                        <Link href={'/profile'}>Hello,
+                            {userName}
+                        </Link>
+                        <button
+                            onClick={() => signOut()}
+                            href={'/register'} className='bg-primary rounded-full px-8 text-white py-2 '>
+                            Logout
+                        </button>
+                    </>
 
                 )}
                 {status === 'unauthenticated' && (

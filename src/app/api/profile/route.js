@@ -2,11 +2,11 @@ import mongoose from "mongoose";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
 
-export async function PUT() {
+export async function PUT(req) {
     mongoose.connect(process.env.MONGO_URL)
     const data = await req.json()
     const session = getServerSession(authOptions)
-    console.log('session', session)
+    // console.log('session', session)
 
 
     if ('name' in data) {

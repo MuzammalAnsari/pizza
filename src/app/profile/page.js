@@ -1,21 +1,28 @@
-'use client'
+"use client"
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { redirect } from "next/navigation"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function ProfilePage() {
-    const session = useSession()
-    const [userName, setUserName] = useState(session?.data?.user?.name || '');
-    const { status } = session
-    // console.log(session)
+    const session = useSession();
+    const [userName, setUserName] = useState(session?.data?.user?.name);
+
+    // useEffect(() => {
+    //     if (session.data?.user?.name) {
+    //         setUserName(session.data.user.name);
+    //     }
+    // }, [session]);
+
+    const { status } = session;
+
     async function handleProfileInfoUpdate(ev) {
-        ev.preventDefault()
-        const response = fetch('api/profile', {
+        ev.preventDefault();
+        const response = await fetch('/api/profile', {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name: userName })
-        })
+            body: JSON.stringify({ name: userName }),
+        });
     }
 
     if (status === 'loading') {
@@ -26,7 +33,7 @@ export default function ProfilePage() {
         return redirect('/login')
     }
 
-    const userImage = session.data.user.image
+    const userImage = session.data.user.image;
     return (
         <session className='mt-8'>
             <h1 className="text-center text-primary text-4xl mb-4">
@@ -40,8 +47,10 @@ export default function ProfilePage() {
                     </div>
                     <form className="grow" onSubmit={handleProfileInfoUpdate}>
                         <div></div>
-                        <input type="email" placeholder="First and Last Name"
-                            value={userName} onChange={ev => setUserName(ev.target.value)} />
+                        <input type="text" placeholder="First and Last Name"
+                            value={userName}
+                            onChange={ev => setUserName(ev.target.value)}
+                        />
                         <input type="email" placeholder="First and Last Name" value={session.data.user.email} disabled />
                         <button type="submit">Save</button>
                     </form>

@@ -31,6 +31,18 @@ export default function ProfilePage() {
             setSaved(true)
         }
     }
+    async function handleFileChange(ev) {
+        const files = ev.target.files
+        if (files?.length) {
+            const data = new FormData()
+            data.set('file', files[0])
+            await fetch('/api/upload', {
+                method: 'POST',
+                body: data,
+                // headers: { 'Content-Type': 'multipart/form-data' },
+            })
+        }
+    }
 
     if (status === 'loading') {
         return 'loading...'
@@ -61,8 +73,12 @@ export default function ProfilePage() {
                 }
                 <div className="flex gap-4 items-center">
                     <div className="p-2 rounded-lg">
-                        <Image className="rounded-lg w-full h-full mb-1" src={userImage} width={250} height={250} alt={'avatar'} />
-                        <button type="button">Edit</button>
+                        <Image className="rounded-lg w-full h-full mb-1" src={userImage}
+                            width={250} height={250} alt={'avatar'} />
+                        <label >
+                            <input type="file" className="hidden" onChange={handleFileChange} />
+                            <span className="border rounded-lg p-2 block text-center">Edit</span>
+                        </label>
                     </div>
                     <form className="grow" onSubmit={handleProfileInfoUpdate}>
                         <input type="text" placeholder="First and Last Name"

@@ -8,6 +8,8 @@ export default function ProfilePage() {
     const session = useSession();
     const [userName, setUserName] = useState('');
     const { status } = session;
+    const [saved, setSaved] = useState(false);
+    const [isSaving, setIsSaving] = useState(false);
 
     useEffect(() => {
         if (status === 'authenticated') {
@@ -15,14 +17,19 @@ export default function ProfilePage() {
         }
     }, [session, status]);
 
-
     async function handleProfileInfoUpdate(ev) {
         ev.preventDefault();
+        setSaved(false)
+        setIsSaving(true)
         const response = await fetch('/api/profile', {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ name: userName }),
         });
+        setIsSaving(false)
+        if (response.ok) {
+            setSaved(true)
+        }
     }
 
     if (status === 'loading') {
@@ -34,19 +41,30 @@ export default function ProfilePage() {
     }
 
     const userImage = session.data.user.image;
+
     return (
         <section className='mt-8'>
             <h1 className="text-center text-primary text-4xl mb-4">
                 Profile
             </h1>
             <div className='max-w-md mx-auto '>
+                {saved && (
+                    <h2 className="text-center bg-green-100 mb-2 p-4 rounded-lg border-4 border-green-300">
+                        Profile Saved!
+                    </h2>
+                )}
+                {isSaving && (
+                    <h2 className="text-center bg-blue-100 mb-2 p-4 rounded-lg border-4 border-blue-300">
+                        Saving...
+                    </h2>
+                )
+                }
                 <div className="flex gap-4 items-center">
                     <div className="p-2 rounded-lg">
                         <Image className="rounded-lg w-full h-full mb-1" src={userImage} width={250} height={250} alt={'avatar'} />
                         <button type="button">Edit</button>
                     </div>
                     <form className="grow" onSubmit={handleProfileInfoUpdate}>
-                        <div></div>
                         <input type="text" placeholder="First and Last Name"
                             value={userName}
                             onChange={ev => setUserName(ev.target.value)}
@@ -57,5 +75,5 @@ export default function ProfilePage() {
                 </div>
             </div>
         </section>
-    )
+    );
 }

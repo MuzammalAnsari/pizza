@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
 import { User } from "../../models/user";
-import { log } from "console";
 
 export async function PUT(req) {
     mongoose.connect(process.env.MONGO_URL)
@@ -16,7 +15,6 @@ export async function PUT(req) {
     if ('name' in data) {
         //update user name
         await User.updateOne({ email }, { name: data.name })
-        // console.log(result);
 
     }
     return Response.json(true)

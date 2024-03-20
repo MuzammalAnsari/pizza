@@ -1,5 +1,4 @@
 import clientPromise from "../../../../libs/mongoConnect";
-// import { UserInfo } from "@/models/UserInfo";
 import bcrypt from "bcrypt";
 import * as mongoose from "mongoose";
 import { User } from "../../../models/user";
@@ -10,7 +9,7 @@ import { MongoDBAdapter } from "@auth/mongodb-adapter";
 
 export const authOptions = {
   secret: process.env.SECRET,
-  adapter: MongoDBAdapter(clientPromise),
+  adapter: MongoDBAdapter(await clientPromise),
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
@@ -31,7 +30,7 @@ export const authOptions = {
         const email = credentials?.email;
         const password = credentials?.password;
 
-        mongoose.connect(process.env.MONGO_URL);
+        await mongoose.connect(process.env.MONGO_URL);
         const user = await User.findOne({ email });
         const passwordOk = user && bcrypt.compareSync(password, user.password);
         if (passwordOk) {
@@ -43,19 +42,6 @@ export const authOptions = {
     }),
   ],
 };
-
-// export async function isAdmin() {
-//   const session = await getServerSession(authOptions);
-//   const userEmail = session?.user?.email;
-//   if (!userEmail) {
-//     return false;
-//   }
-//   const userInfo = await UserInfo.findOne({ email: userEmail });
-//   if (!userInfo) {
-//     return false;
-//   }
-//   return userInfo.admin;
-// }
 
 const handler = NextAuth(authOptions);
 

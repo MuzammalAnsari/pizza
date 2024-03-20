@@ -7,11 +7,23 @@ import dotenv from 'dotenv';
 dotenv.config();
 export async function POST(req) {
     try {
+        // Parse JSON body from request
+        const body = await req.json();
+
         // Connect to MongoDB using the MONGO_URL environment variable
         await mongoose.connect(process.env.MONGO_URL);
 
-        // Parse JSON body from request
-        const body = await req.json();
+        const pass = body.password;
+        if (!pass?.length || pass.length < 6) {
+            new Error("Password must be at least 6 characters long");
+        }
+
+        const notHashedPassword = pass
+        const salt = bcrypt.genSaltSync(10)
+        const hashedPassword = bcrypt.hashSync(notHashedPassword, salt);
+
+        body.password = hashedPassword
+
 
         // Create a new user with the parsed body
         const createdUser = await User.create(body);

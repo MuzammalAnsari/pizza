@@ -6,15 +6,15 @@ import { useState, useEffect } from "react";
 
 export default function ProfilePage() {
     const session = useSession();
-    const [userName, setUserName] = useState(session?.data?.user?.name);
-
-    // useEffect(() => {
-    //     if (session.data?.user?.name) {
-    //         setUserName(session.data.user.name);
-    //     }
-    // }, [session]);
-
+    const [userName, setUserName] = useState('');
     const { status } = session;
+
+    useEffect(() => {
+        if (status === 'authenticated') {
+            setUserName(session.data.user.name);
+        }
+    }, [session, status]);
+
 
     async function handleProfileInfoUpdate(ev) {
         ev.preventDefault();
@@ -35,7 +35,7 @@ export default function ProfilePage() {
 
     const userImage = session.data.user.image;
     return (
-        <session className='mt-8'>
+        <section className='mt-8'>
             <h1 className="text-center text-primary text-4xl mb-4">
                 Profile
             </h1>
@@ -56,6 +56,6 @@ export default function ProfilePage() {
                     </form>
                 </div>
             </div>
-        </session>
+        </section>
     )
 }

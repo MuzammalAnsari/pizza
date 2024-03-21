@@ -1,4 +1,4 @@
-import { User } from "@/app/models/user"
+import { User } from "../../models/user"
 import mongoose from 'mongoose';
 
 import dotenv from 'dotenv';

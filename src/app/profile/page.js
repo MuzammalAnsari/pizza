@@ -4,18 +4,21 @@ import Image from "next/image";
 import { redirect } from "next/navigation"
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
+import UserTabs from "../../components/layout/userTabs";
 
 export default function ProfilePage() {
     const session = useSession();
     console.log(session);
     const [userName, setUserName] = useState('');
-    const { status } = session;
     const [phone, setPhone] = useState('');
     const [streetAddress, setStreetAddress] = useState('');
     const [postalCode, setPostalCode] = useState('');
-    let [city, setCity] = useState('');
-    let [country, setCountry] = useState('');
+    const [city, setCity] = useState('');
+    const [country, setCountry] = useState('');
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [profileFetched, setProfileFetched] = useState(false);
 
+    const { status } = session;
 
     useEffect(() => {
         if (status === 'authenticated') {
@@ -27,6 +30,8 @@ export default function ProfilePage() {
                     setPostalCode(data.postalCode);
                     setCity(data.city);
                     setCountry(data.country);
+                    setIsAdmin(data.admin);
+                    setProfileFetched(true)
                 })
             })
 
@@ -53,7 +58,7 @@ export default function ProfilePage() {
         }
     }
 
-    if (status === 'loading') {
+    if (status === 'loading' || !profileFetched) {
         return 'loading...'
     }
 
@@ -65,13 +70,11 @@ export default function ProfilePage() {
 
     return (
         <section className='mt-8'>
-            <h1 className="text-center text-primary text-4xl mb-4">
-                Profile
-            </h1>
+            <UserTabs isAdmin={isAdmin} />
             <div className='max-w-md mx-auto '>
                 <div className="flex gap-4 ">
                     <div className="p-2 rounded-lg">
-                        <Image className="rounded-lg w-full  mb-1" src={userImage}
+                        <Image className="rounded-lg w-full mb-1 min-w-[90px]" src={userImage}
                             width={250} height={250} alt={'avatar'} objectFit="cover" />
                     </div>
                     <form className="grow" onSubmit={handleProfileInfoUpdate}>

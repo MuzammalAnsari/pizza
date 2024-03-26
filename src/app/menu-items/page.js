@@ -1,10 +1,12 @@
 'use client'
 import UserTabs from "../../components/layout/userTabs";
 import { useProfile } from "../../components/layout/useProfile";
+import EditableImage from "../../components/layout/EditableImage";
+import { useState } from "react";
 
 
 export default function MenuItemsPage() {
-
+    const [image, setImage] = useState('');
     const { loading, data } = useProfile();
 
     if (loading) {
@@ -18,9 +20,10 @@ export default function MenuItemsPage() {
         <section>
             <UserTabs isAdmin={true} />
             <form className="mt-8 max-w-md mx-auto">
-                <div className="flex items-start gap-4">
+                <div className="flex items-start gap-4"
+                    style={{ gridTemplateColumns: '.3fr .7fr' }}>
                     <div>
-                        image
+                        <EditableImage link={image} setLink={setImage} />
                     </div>
                     <div className="grow ">
                         <label>Item name</label>

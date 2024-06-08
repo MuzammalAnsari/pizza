@@ -1,15 +1,12 @@
-import clientPromise from "../../../../libs/mongoConnect";
-import bcrypt from "bcrypt";
-import * as mongoose from "mongoose";
-import { User } from "../../../models/user";
-import NextAuth, { getServerSession } from "next-auth";
+// /pages/api/auth/[...nextauth].js
+import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
-import { MongoDBAdapter } from "@auth/mongodb-adapter";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../../utils/firebase"; // Importing from client-side Firebase
 
 export const authOptions = {
   secret: process.env.SECRET,
-  adapter: MongoDBAdapter(await clientPromise),
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
@@ -19,22 +16,23 @@ export const authOptions = {
       name: "Credentials",
       id: "credentials",
       credentials: {
-        username: {
-          label: "Email",
-          type: "email",
-          placeholder: "test@example.com",
-        },
+        email: { label: "Email", type: "email", placeholder: "test@example.com" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
         const email = credentials?.email;
         const password = credentials?.password;
 
-        await mongoose.connect(process.env.MONGO_URL);
-        const user = await User.findOne({ email });
-        const passwordOk = user && bcrypt.compareSync(password, user.password);
-        if (passwordOk) {
-          return user;
+        try {
+          const userCredential = await signInWithEmailAndPassword(auth, email, password);
+          const user = userCredential.user;
+
+          if (user) {
+            return { email: user.email, id: user.uid };
+          }
+        } catch (error) {
+          console.error(error);
+          return null;
         }
 
         return null;

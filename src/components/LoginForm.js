@@ -1,53 +1,32 @@
-// /components/LoginForm.js
+'use client'
+
 import { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { useRouter } from "next/router";
-import { auth } from "../utils/firebase";
+import { useRouter } from "next/router"; // Import useRouter from next/navigation
 
-const LoginForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
-  const router = useRouter();
+export default function LoginForm() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState(null);
+    const router = useRouter(); // Use useRouter hook from next/navigation
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError(null);
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        const auth = getAuth();
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+            router.push("/profile");
+        } catch (error) {
+            setError(error.message);
+        }
+    };
 
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-      router.push("/profile");
-    } catch (error) {
-      setError(error.message);
-    }
-  };
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <h2>Login</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <div>
-        <label>Email</label>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <label>Password</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </div>
-      <button type="submit">Login</button>
-    </form>
-  );
-};
-
-export default LoginForm;
+    return (
+        <form onSubmit={handleLogin}>
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
+            {error && <p>{error}</p>}
+            <button type="submit">Login</button>
+        </form>
+    );
+}

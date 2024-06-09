@@ -1,61 +1,32 @@
-// /components/RegisterForm.js
+'use client';
+
 import { useState } from "react";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/router";
 
-const RegisterForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
-  const router = useRouter();
+export default function RegisterForm() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState(null);
+    const router = useRouter();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError(null);
+    const handleRegister = async (e) => {
+        e.preventDefault();
+        const auth = getAuth();
+        try {
+            await createUserWithEmailAndPassword(auth, email, password);
+            router.push("/profile");
+        } catch (error) {
+            setError(error.message);
+        }
+    };
 
-    try {
-      const response = await fetch("/api/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Registration failed");
-      }
-
-      router.push("/login");
-    } catch (error) {
-      setError(error.message);
-    }
-  };
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <h2>Register</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <div>
-        <label>Email</label>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <label>Password</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </div>
-      <button type="submit">Register</button>
-    </form>
-  );
-};
-
-export default RegisterForm;
+    return (
+        <form onSubmit={handleRegister}>
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
+            {error && <p>{error}</p>}
+            <button type="submit">Register</button>
+        </form>
+    );
+}

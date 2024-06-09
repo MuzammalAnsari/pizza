@@ -3,7 +3,7 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../../utils/firebase"; // Importing from client-side Firebase
+import { auth } from "../../../../utils/firebase"; // Importing from client-side Firebase
 
 export const authOptions = {
   secret: process.env.SECRET,

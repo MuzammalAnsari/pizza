@@ -1,15 +1,14 @@
 'use client'
 
 import Link from "next/link";
-import { getAuth } from "firebase/auth";
-import { signOut } from "firebase/auth";
+import { getAuth, signOut } from "firebase/auth";
 import { useState, useEffect } from "react";
+import { auth } from "../../utils/firebase"; // Import the initialized auth instance
 
 export default function Header() {
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        const auth = getAuth();
         const unsubscribe = auth.onAuthStateChanged(user => {
             if (user) {
                 setUser(user);
@@ -22,7 +21,7 @@ export default function Header() {
 
     return (
         <header className="flex items-center justify-between">
-            <Link className="text-primary font-semibold text-2xl" href=""> ST PIZZA</Link>
+            <Link className="text-primary font-semibold text-2xl" href="/"> ST PIZZA</Link>
             <nav className='flex gap-4 items-center text-gray-500 font-semibold'>
                 <Link href={''}>Home</Link>
                 <Link href={''}>Menu</Link>
@@ -32,21 +31,18 @@ export default function Header() {
             <nav className='flex items-center gap-4 text-gray-500 font-semibold'>
                 {user && (
                     <>
-                        <Link href={'/profile'}>Hello,
-                            {userName}
-                        </Link>
+                        <Link href="/profile">Hello, {user.displayName || user.email}</Link>
                         <button
-                            onClick={() => signOut()}
-                            href={'/register'} className='bg-primary rounded-full px-8 text-white py-2 '>
+                            onClick={() => signOut(auth)}
+                            className='bg-primary rounded-full px-8 text-white py-2'>
                             Logout
                         </button>
                     </>
-
                 )}
                 {!user && (
                     <>
-                        <Link href={'/login'} className='px-8  py-2 '>Login</Link>
-                        <Link href={'/register'} className='bg-primary rounded-full px-8 text-white py-2 '>Register</Link>
+                        <Link href="/login" className='px-8 py-2'>Login</Link>
+                        <Link href="/register" className='bg-primary rounded-full px-8 text-white py-2'>Register</Link>
                     </>
                 )}
             </nav>

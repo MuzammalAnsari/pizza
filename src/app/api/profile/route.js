@@ -1,4 +1,4 @@
-// pages/api/profile/index.js
+
 import { db } from '../../../libs/firebaseAdmin';
 import { getServerSession } from "next-auth/react";
 

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { useRouter } from "next/router"; // Import useRouter from next/navigation
+import { useRouter } from "next/navigation"; // Import useRouter from next/navigation
 
 export default function LoginForm() {
     const [email, setEmail] = useState("");

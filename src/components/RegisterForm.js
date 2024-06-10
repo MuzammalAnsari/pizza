@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export default function RegisterForm() {
     const [email, setEmail] = useState("");

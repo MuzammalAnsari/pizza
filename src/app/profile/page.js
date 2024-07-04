@@ -69,7 +69,7 @@ export default function ProfilePage() {
         return redirect('/login')
     }
 
-    // const userImage = session.data.user.image;
+    const userImage = session.data.user.image;
 
     return (
         <section className='mt-8'>

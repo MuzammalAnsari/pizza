@@ -1,12 +1,12 @@
-import Image from "next/image";
-import toast from "react-hot-toast";
+import Image from 'next/image';
+import toast from 'react-hot-toast';
 
 export default function EditableImage({ link, setLink }) {
 
     async function handleFileChange(ev) {
         const files = ev.target.files;
         if (files?.length === 1) {
-            const data = new FormData;
+            const data = new FormData();
             data.set('file', files[0]);
 
             const uploadPromise = fetch('/api/upload', {
@@ -14,9 +14,9 @@ export default function EditableImage({ link, setLink }) {
                 body: data,
             }).then(response => {
                 if (response.ok) {
-                    return response.json().then(link => {
-                        setLink(link);
-                    })
+                    return response.json().then(({ url }) => {
+                        setLink(url);
+                    });
                 }
                 throw new Error('Something went wrong');
             });

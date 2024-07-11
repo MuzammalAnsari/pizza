@@ -1,27 +1,38 @@
-import multer from 'multer';
-import nextConnect from 'next-connect';
-import cloudinary from '../../../../cloudinary.config'; // Adjust path as necessary
+import cloudinary from '../../../../cloudinary.config'; // Adjust the path as needed
 
-// Initialize multer for handling file uploads
-const upload = multer({ dest: 'uploads/' });
-
-// Create a handler using next-connect
-const handler = nextConnect()
-  .use(upload.single('file'))
-  .post(async (req, res) => {
+export async function POST(req) {
     try {
-      const file = req.file;
+        // Handle form data
+        const formData = await req.formData();
 
-      if (!file) {
-        return res.status(400).json({ error: 'No file uploaded' });
-      }
+        // Check if the file is present
+        if (!formData.has('file')) {
+            return new Response(JSON.stringify({ error: 'No file uploaded' }), { status: 400 });
+        }
 
-      // Upload file to Cloudinary
-      const result = await cloudinary.uploader.upload(file.path);
-      res.status(200).json({ url: result.secure_url });
+        // Extract the file from form data
+        const file = formData.get('file');
+
+        // Ensure the file is valid
+        if (!file || !(file instanceof Blob)) {
+            return new Response(JSON.stringify({ error: 'Invalid file' }), { status: 400 });
+        }
+
+        // Upload to Cloudinary
+        const uploadResponse = await new Promise((resolve, reject) => {
+            cloudinary.uploader.upload_stream({ folder: 'YOUR_FOLDER_NAME' }, (error, result) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(result);
+                }
+            }).end(file);
+        });
+
+        // Return the URL of the uploaded image
+        return new Response(JSON.stringify({ url: uploadResponse.secure_url }), { status: 200 });
     } catch (error) {
-      res.status(500).json({ error: 'Failed to upload image' });
+        console.error('Upload error:', error);
+        return new Response(JSON.stringify({ error: 'Upload failed' }), { status: 500 });
     }
-  });
-
-export default handler;
+}

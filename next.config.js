@@ -10,11 +10,11 @@ const nextConfig = {
             },
             {
                 protocol: 'https',
-                hostname: 'dawid-food-ordering.s3.amazonaws.com',
+                hostname: 'dawid-food-ordering.s3.amazonaws.com', //for amazon s3
             },
             {
                 protocol: 'https',
-                hostname: 'res.cloudinary.com', // Add this line
+                hostname: 'res.cloudinary.com',
             }
         ]
     }

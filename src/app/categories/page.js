@@ -15,12 +15,21 @@ export default function CategoriesPage() {
     }, [])
 
     function fetchCategories() {
-        fetch('/api/categories').then(response => {
-            response.json().then(categories => {
-                setCategories(categories)
+        fetch('/api/categories')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
             })
-        })
+            .then(categories => {
+                setCategories(categories);
+            })
+            .catch(error => {
+                console.error('Error fetching categories:', error);
+            });
     }
+    
     async function handleCategorySubmit(event) {
         event.preventDefault();
         const creationPromise = new Promise(async (resolve, reject) => {
@@ -105,7 +114,7 @@ export default function CategoriesPage() {
                                 setEditedCategory(category);
                                 setCategoryName(category.name);
                             }}
-                            className="bg-gray-300 rounded-xl p-2
+                            className="rounded-xl p-2
                             cursor-pointer mb-1 flex gap-1"
                         >
                             <span className="flex"> {category.name}</span>

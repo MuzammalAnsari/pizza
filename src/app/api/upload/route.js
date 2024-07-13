@@ -20,7 +20,7 @@ export async function POST(req) {
 
         // Upload to Cloudinary
         const uploadResponse = await new Promise((resolve, reject) => {
-            cloudinary.uploader.upload_stream({ folder: 'YOUR_FOLDER_NAME' }, (error, result) => {
+            cloudinary.uploader.upload_stream({ folder: 'ecommerce' }, (error, result) => {
                 if (error) {
                     reject(error);
                 } else {

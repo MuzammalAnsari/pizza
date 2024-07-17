@@ -20,3 +20,15 @@ export async function PUT(res) {
     const categoryDoc = await Category.findOneAndUpdate({ _id }, { name });
     return Response.json(categoryDoc);
 }
+
+export async function DELETE(req) {
+    mongoose.connect(process.env.MONGO_URL)
+    const url = new URL(req.url)
+    const _id = url.searchParams.get('_id')
+    await Category.deleteOne({_id})
+    return Response.json(true);
+
+    // const { _id } = await res.json();
+    // const categoryDoc = await Category.findOneAndDelete({ _id });
+    // return Response.json(categoryDoc);
+}

@@ -1,10 +1,18 @@
 const { Schema, models, model } = require("mongoose");
 
-const MenuItemSchema = new Schema({
+const ExtraPriceSchema = new Schema ({
     name: { type: String, required: true },
-    description: { type: String, required: true },
-    basePrice: { type: Number, required: true },
+    price: { type: Number, required: true },
+})
+
+
+const MenuItemSchema = new Schema({
+    name: { type: String },
+    description: { type: String },
+    basePrice: { type: Number },
     image: { type: String },
+    sizes: {type: [ExtraPriceSchema]},
+    extraIngredientsPrices: {type: [ExtraPriceSchema]}
 
 }, { timestamps: true });
 

@@ -67,7 +67,7 @@ export default function ProfilePage() {
 
     if (status === 'unauthenticated') {
         return redirect('/login')
-    }x
+    }
 
     const userImage = session.data.user.image;
 

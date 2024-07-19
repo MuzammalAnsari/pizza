@@ -111,10 +111,14 @@ async function handleDeleteCategory(_id) {
               onChange={(ev) => setCategoryName(ev.target.value)}
             />
           </div>
-          <div className="pb-2">
+          <div className="pb-2 flex gap-2">
             <button type="submit">
               {editedCategory ? "Update" : "Create"}
             </button>
+            <button type="button" onClick={()=>{
+                setEditedCategory(null)
+                setCategoryName('')
+                }}>cancel</button>
           </div>
         </div>
       </form>
@@ -123,7 +127,7 @@ async function handleDeleteCategory(_id) {
         <h2 className="text-sm text-gray-500">Existing Category:</h2>
         {categories?.length > 0 &&
           categories.map((category) => (
-            <div className="rounded-xl p-2 bg-gray-100 mb-1 flex gap-1">
+            <div className="rounded-xl p-2 bg-gray-100 mb-1 flex gap-1 items-center">
               <div className="grow">
                 {category.name}
               </div>

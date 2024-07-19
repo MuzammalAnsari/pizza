@@ -27,8 +27,4 @@ export async function DELETE(req) {
     const _id = url.searchParams.get('_id')
     await Category.deleteOne({_id})
     return Response.json(true);
-
-    // const { _id } = await res.json();
-    // const categoryDoc = await Category.findOneAndDelete({ _id });
-    // return Response.json(categoryDoc);
 }

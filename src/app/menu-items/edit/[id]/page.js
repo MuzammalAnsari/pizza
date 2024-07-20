@@ -1,39 +1,36 @@
-'use client'
+"use client";
 
 import Link from "next/link";
 import UserTabs from "../../../../components/layout/userTabs";
-import Right from "../../../../components/icons/Right";
-import Image from "next/image";
 import toast from "react-hot-toast";
 import Left from "../../../../components/icons/Left";
-import EditableImage from "../../../../components/layout/EditableImage";
+import DeleteButton from "../../../../components/DeleteButton";
 import { useEffect, useState } from "react";
 import { redirect, useParams } from "next/navigation";
 import { useProfile } from "../../../../components/layout/useProfile";
 import MenuItemForm from "../../../../components/layout/MenuItemForm";
 
-export default function EditMenuItemPage(){
-
-  const {id} = useParams()
-  const [menuItem, setMenuItem] = useState(null)
+export default function EditMenuItemPage() {
+  const { id } = useParams();
+  const [menuItem, setMenuItem] = useState(null);
   const [redirectToItems, setRedirectToItems] = useState(false);
   const { loading, data } = useProfile();
 
-  useEffect(()=>{
-    fetch('/api/menu-items/').then(response => {
-      response.json().then(items => {
-        const item = items.find(i => i._id === id)
+  useEffect(() => {
+    fetch("/api/menu-items/").then((response) => {
+      response.json().then((items) => {
+        const item = items.find((i) => i._id === id);
         // console.log(item);
-        setMenuItem(item)
-      })
-  })
-  }, [])
+        setMenuItem(item);
+      });
+    });
+  }, []);
 
   //async handleFormSubmit function
   async function handleFormSubmit(e, data) {
     e.preventDefault();
 
-    data = {...data, _id:id}
+    data = { ...data, _id: id };
     const savingPromise = new Promise(async (resolve, reject) => {
       const response = await fetch("/api/menu-items", {
         method: "PUT",
@@ -102,10 +99,13 @@ export default function EditMenuItemPage(){
           <Left />
         </Link>
       </div>
-      <MenuItemForm menuItem={menuItem} onSubmit={handleFormSubmit}/>
+      <MenuItemForm menuItem={menuItem} onSubmit={handleFormSubmit} />
       <div className="max-w-md mx-auto mt-4">
-        <div className="max-w-xs ml-auto pl-8">
-      <button type="button" onClick={handleDelete}>Delete menu Item</button>
+        <div className="max-w-xs ml-auto pl-10">
+          <DeleteButton
+           label="Delete this item"
+           onDelete={handleDelete}
+          />
         </div>
       </div>
     </section>

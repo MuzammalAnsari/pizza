@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EditableImage from "./EditableImage";
 import MenuItemPriceProps from "./MenuItemPriceProps";
 
@@ -8,11 +8,38 @@ export default function MenuItemForm({ onSubmit, menuItem }) {
   const [name, setName] = useState(menuItem?.name || "");
   const [basePrice, setBasePrice] = useState(menuItem?.basePrice || "");
   const [sizes, setSizes] = useState(menuItem?.sizes || []);
-  const [extraIngredientsPrices, setExtraIngredientsPrices] = useState(menuItem?.extraIngredientsPrices || []);
+  const [categories, setCategories] = useState([])
+  const [category, setCategory] = useState(menuItem?.category || "");
+  const [extraIngredientsPrices, setExtraIngredientsPrices] = useState(
+    menuItem?.extraIngredientsPrices || []
+  );
+
+  
+  useEffect(() => {
+    fetch("/api/categories")
+      .then((res) => res.json())
+      .then((categories) => {
+        setCategories(categories);
+      })
+      .catch((error) => {
+        console.error("Error fetching categories:", error);
+      });
+  }, []);
+
 
   return (
     <form
-      onSubmit={(ev) => onSubmit(ev, { image, name, description, basePrice, sizes, extraIngredientsPrices })}
+      onSubmit={(ev) =>
+        onSubmit(ev, {
+          image,
+          name,
+          description,
+          basePrice,
+          sizes,
+          extraIngredientsPrices,
+          category,
+        })
+      }
       className="mt-8 "
     >
       <div
@@ -36,7 +63,12 @@ export default function MenuItemForm({ onSubmit, menuItem }) {
             value={description}
             onChange={(ev) => setDescription(ev.target.value)}
           />
-
+          <label>Category</label>
+          <select value={category} onChange={ev => setCategory(ev.target.value)}>
+            {categories?.length > 0 && categories.map(c=>(
+              <option value={c._id}>{c.name}</option>
+            ))}
+          </select>
           <label>Base Price</label>
           <input
             type="text"

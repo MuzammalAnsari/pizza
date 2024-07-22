@@ -1,14 +1,17 @@
 import { useState } from "react";
 import EditableImage from "./EditableImage";
+import { useProfile } from "./useProfile";
 
 function UserForm({ user = {}, onSave }) {
-  const [userName, setUserName] = useState(user?.name || '');
-  const [image, setImage] = useState(user?.image || '');
-  const [phone, setPhone] = useState(user?.phone || '');
-  const [streetAddress, setStreetAddress] = useState(user?.streetAddress || '');
-  const [postalCode, setPostalCode] = useState(user?.postalCode || '');
-  const [city, setCity] = useState(user?.city || '');
-  const [country, setCountry] = useState(user?.country || '');
+  const [userName, setUserName] = useState(user?.name || "");
+  const [image, setImage] = useState(user?.image || "");
+  const [phone, setPhone] = useState(user?.phone || "");
+  const [streetAddress, setStreetAddress] = useState(user?.streetAddress || "");
+  const [postalCode, setPostalCode] = useState(user?.postalCode || "");
+  const [city, setCity] = useState(user?.city || "");
+  const [country, setCountry] = useState(user?.country || "");
+  const [admin, setAdmin] = useState(user?.admin || false);
+  const { data: loggedInUserData } = useProfile();
 
   
   return (
@@ -18,10 +21,18 @@ function UserForm({ user = {}, onSave }) {
           <EditableImage link={image} setLink={setImage} />
         </div>
       </div>
-      <form 
+      <form
         className="grow"
         onSubmit={(ev) =>
-          onSave(ev, { name: userName, image, phone, streetAddress, postalCode, city, country })
+          onSave(ev, {
+            name: userName,
+            image,
+            phone,
+            streetAddress,
+            postalCode,
+            city,
+            country,
+          })
         }
       >
         <label>First and Last Name:</label>
@@ -31,16 +42,13 @@ function UserForm({ user = {}, onSave }) {
           value={userName}
           onChange={(ev) => setUserName(ev.target.value)}
         />
-{/* {console.log(email)} */}
         <label>Email:</label>
         <input
           type="email"
           disabled={true}
           value={user.email || ""}
-          placeholder={'email'}
+          placeholder={"email"}
         />
-
-
         <label>Phone:</label>
         <input
           type="tel"
@@ -56,7 +64,7 @@ function UserForm({ user = {}, onSave }) {
           value={streetAddress}
           onChange={(ev) => setStreetAddress(ev.target.value)}
         />
-        <div className="flex gap-4">
+        <div className="grid grid-cols-2 gap-4">
           <div>
             <label>Postal Code:</label>
             <input
@@ -83,6 +91,23 @@ function UserForm({ user = {}, onSave }) {
           value={country}
           onChange={(ev) => setCountry(ev.target.value)}
         />
+        {loggedInUserData.admin && (
+          <div>
+            <label
+              htmlFor="adminCb"
+              className="inline-flex items-center gap-2 p-2 mb-2"
+            >
+              <input
+                type="checkbox"
+                id="adminCb"
+                checked={admin}
+                value={"1"}
+                onChange={(ev) => setAdmin(ev.target.checked)}
+              />
+              <span>Admin</span>
+            </label>
+          </div>
+        )}
         <button type="submit">Save</button>
       </form>
     </div>

@@ -26,6 +26,7 @@ function UserForm({ user = {}, onSave }) {
         onSubmit={(ev) =>
           onSave(ev, {
             name: userName,
+            admin,
             image,
             phone,
             streetAddress,

@@ -10,7 +10,7 @@ export default function Home() {
       <Hero />
       <HomeMenu />
 
-      <section className="text-center my-16">
+      <section className="text-center my-16" id="about">
         <SectionHeaders
           subHeader={'Our Story'}
           mainHeader={'About Us'}
@@ -36,7 +36,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="text-center my-8">
+      <section className="text-center my-8 " id="contact">
         <SectionHeaders
           subHeader={'Don\'t Hesitate'}
           mainHeader={'Contact Us'}

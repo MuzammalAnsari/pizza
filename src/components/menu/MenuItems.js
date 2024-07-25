@@ -5,8 +5,8 @@ export default function MenuItem({image,name,description,basePrice,sizes,extraIn
                 <img src={image}alt="pizza" className="max-h-auto max-h-24 block mx-auto" />
             </div>
             <h4 className='font-semibold my-3'>{name}</h4>
-            <p className='text-gray-500 text-sm'>{description}</p>
-            <button className="bg-primary mt-4 rounded-full text-white px-8 py-2">Add to cart</button>
+            <p className='text-gray-500 text-sm line-clamp-3'>{description}</p>
+            <button className="bg-primary mt-4 rounded-full text-white px-8 py-2">Add to cart ${basePrice}</button>
         </div>
     )
 }

@@ -1,6 +1,8 @@
 "use client"
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react"
+import { useContext } from "react";
+import { cartContext } from "../AppContext";
 
 export default function Header() {
     const session = useSession()
@@ -8,12 +10,13 @@ export default function Header() {
     const status = session.status
     const userData = session.data?.user
     let userName = userData?.name || userData?.email
+    const {cartProducts} = useContext(cartContext)
     if (userName && userName.includes(' ')) {
         userName = userName.split(' ')[0]
     }
     return (
         <header className="flex items-center justify-between">
-            <Link className="text-primary font-semibold text-2xl" href=""> ST PIZZA</Link>
+            <Link className="text-primary font-semibold text-2xl" href={'/'}> ST PIZZA</Link>
             <nav className='flex gap-4 items-center text-gray-500 font-semibold'>
                 <Link href={'/'}>Home</Link>
                 <Link href={'/menu'}>Menu</Link>
@@ -40,7 +43,7 @@ export default function Header() {
                         <Link href={'/register'} className='bg-primary rounded-full px-8 text-white py-2 '>Register</Link>
                     </>
                 )}
-
+                    <Link href={'/cart'}> cart({cartProducts.length})</Link>
             </nav>
         </header>
     )

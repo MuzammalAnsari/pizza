@@ -1,6 +1,7 @@
 import { useState } from "react";
 import EditableImage from "./EditableImage";
 import { useProfile } from "./useProfile";
+import AddressInputs from "./AddressInputs";
 
 function UserForm({ user = {}, onSave }) {
   const [userName, setUserName] = useState(user?.name || "");
@@ -12,6 +13,15 @@ function UserForm({ user = {}, onSave }) {
   const [country, setCountry] = useState(user?.country || "");
   const [admin, setAdmin] = useState(user?.admin || false);
   const { data: loggedInUserData } = useProfile();
+
+  function handleAddressChange(propName, value) {
+    console.log(`Updating ${propName} with value: ${value}`);
+    if (propName === "phone") setPhone(value); 
+    if (propName === "streetAddress") setStreetAddress(value);
+    if (propName === "postalCode") setPostalCode(value);
+    if (propName === "city") setCity(value);
+    if (propName === "country") setCountry(value);
+  }
 
   
   return (
@@ -50,48 +60,10 @@ function UserForm({ user = {}, onSave }) {
           value={user.email || ""}
           placeholder={"email"}
         />
-        <label>Phone:</label>
-        <input
-          type="tel"
-          placeholder="Phone Number"
-          value={phone}
-          onChange={(ev) => setPhone(ev.target.value)}
-        />
-
-        <label>Address:</label>
-        <input
-          type="text"
-          placeholder="Street Address"
-          value={streetAddress}
-          onChange={(ev) => setStreetAddress(ev.target.value)}
-        />
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label>Postal Code:</label>
-            <input
-              type="text"
-              placeholder="Postal Code"
-              value={postalCode}
-              onChange={(ev) => setPostalCode(ev.target.value)}
-            />
-          </div>
-          <div>
-            <label>City:</label>
-            <input
-              type="text"
-              placeholder="City"
-              value={city}
-              onChange={(ev) => setCity(ev.target.value)}
-            />
-          </div>
-        </div>
-        <label>Country:</label>
-        <input
-          type="text"
-          placeholder="Country"
-          value={country}
-          onChange={(ev) => setCountry(ev.target.value)}
-        />
+        <AddressInputs
+         addressProps={{phone,streetAddress,postalCode,city,country}}
+         setAddressProp={handleAddressChange}
+         />
         {loggedInUserData.admin && (
           <div>
             <label

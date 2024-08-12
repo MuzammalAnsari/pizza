@@ -6,13 +6,13 @@ import { getStorage } from "firebase/storage";
 import { getAnalytics, isSupported } from "firebase/analytics"; // Import getAnalytics and isSupported
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDYb7nbVx2zxHYhz8hurS-8K7QQ7r0wAcA",
-  authDomain: "food-ordering-1-d5a63.firebaseapp.com",
-  projectId: "food-ordering-1-d5a63",
-  storageBucket: "food-ordering-1-d5a63.appspot.com",
-  messagingSenderId: "909885188710",
-  appId: "1:909885188710:web:c70e8a58c3fdc3cb4e5ba7",
-  measurementId: "G-0L9F4Z18F6"
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase

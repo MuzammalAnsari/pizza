@@ -1,13 +1,15 @@
 'use client'
 
+// components/ProfilePage.js
 
 import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { redirect } from "next/navigation";
 import toast from "react-hot-toast";
 import UserTabs from "../../components/layout/userTabs";
+import Loader from "../../components/layout/loader";
 
-export default function ProfilePage() {
+const ProfilePage = () => {
   const { data: session, status } = useSession();
   const [phone, setPhone] = useState('');
   const [streetAddress, setStreetAddress] = useState('');
@@ -15,6 +17,7 @@ export default function ProfilePage() {
   const [city, setCity] = useState('');
   const [country, setCountry] = useState('');
   const [profileFetched, setProfileFetched] = useState(false);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     if (status === 'authenticated') {
@@ -26,6 +29,7 @@ export default function ProfilePage() {
           setCity(data.city);
           setCountry(data.country);
           setProfileFetched(true);
+          setUser(data); // Set the user object
         });
       });
     }
@@ -52,7 +56,7 @@ export default function ProfilePage() {
   }
 
   if (status === 'loading' || !profileFetched) {
-    return 'loading...';
+    return <Loader />;
   }
 
   if (status === 'unauthenticated') {
@@ -63,6 +67,11 @@ export default function ProfilePage() {
     <section className='mt-8'>
       <UserTabs />
       <div className='max-w-md mx-auto'>
+        <h2>Profile</h2>
+        <p>Username: {user?.username}</p>
+        <p>Email: {user?.email}</p>
+        <p>Phone: {phone}</p>
+        <p>Address: {streetAddress}, {city}, {country} {postalCode}</p>
         <form onSubmit={handleProfileInfoUpdate}>
           <label>Phone:</label>
           <input type="tel" placeholder="Phone Number"
@@ -101,4 +110,6 @@ export default function ProfilePage() {
       </div>
     </section>
   );
-}
+};
+
+export default ProfilePage;

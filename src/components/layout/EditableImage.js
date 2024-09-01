@@ -17,13 +17,32 @@ export default function EditableImage({ link, setLink }) {
         setUploading(false);
     };
 
+    const openCloudinaryWidget = () => {
+        setUploading(true);
+        const widget = window.cloudinary.createUploadWidget(
+            {
+                cloudName: 'dfawvgek6',
+                uploadPreset: 'dfawvgek6',
+                folder: 'ecommerce', // Optional
+                sources: ['local'], // Only allow file upload from local files
+            },
+            (error, result) => {
+                if (result.event === 'success') {
+                    handleUpload(result);
+                } else {
+                    setUploading(false);
+                }
+            }
+        );
+        widget.open();
+    };
+
     return (
         <>
-        <Script
+            <Script
                 src="https://upload-widget.cloudinary.com/global/all.js"
                 strategy="lazyOnload"
-                onLoad={() => console.log('Cloudinary script loaded')}
-        />
+            />
 
             {link ? (
                 <Image className="rounded-lg w-full h-full mb-1" src={link} width={250} height={250} alt={'avatar'} />
@@ -32,32 +51,12 @@ export default function EditableImage({ link, setLink }) {
                     No image
                 </div>
             )}
-            <label>
-                <input
-                    type="file"
-                    className="hidden"
-                    onChange={(e) => {
-                        setUploading(true);
-                        const widget = window.cloudinary.createUploadWidget(
-                            {
-                                cloudName: 'dfawvgek6',
-                                uploadPreset: 'dfawvgek6',
-                                folder: 'ecommerce', // Optional
-                                sources: ['local'], // Only allow file upload from local files
-                            },
-                            (error, result) => {
-                                if (result.event === 'success') {
-                                    handleUpload(result);
-                                }
-                            }
-                        );
-                        widget.open();
-                    }}
-                />
-                <span className="block border border-gray-300 rounded-lg p-2 text-center cursor-pointer">
-                    {uploading ? 'Uploading...' : 'Change image'}
-                </span>
-            </label>
+            <span
+                className="block border border-gray-300 rounded-lg p-2 text-center cursor-pointer"
+                onClick={openCloudinaryWidget}
+            >
+                {uploading ? 'Opening...' : 'Change image'}
+            </span>
         </>
     );
 }

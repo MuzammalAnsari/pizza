@@ -26,7 +26,7 @@ export default function MenuItemsPage() {
     return "Not an Admin";
   }
   return (
-    <section className="mt-8 max-w-md mx-auto">
+    <section className="mt-8 max-w-2xl mx-auto">
       <UserTabs isAdmin={true} />
       <div className="flex flex-col items-center mt-8">
         <Link className="button" href="/menu-items/new">

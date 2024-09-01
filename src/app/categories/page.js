@@ -96,7 +96,7 @@ async function handleDeleteCategory(_id) {
     );
   }
   return (
-    <section className="mt-8 max-w-md mx-auto">
+    <section className="mt-8 max-w-2xl mx-auto">
       <UserTabs isAdmin={true} />
 
       <form className="mt-8" onSubmit={handleCategorySubmit}>

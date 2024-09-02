@@ -2,6 +2,7 @@ import React from "react";
 
 function menuItemBox({onAddToCart, ...item}) {
     const { image, name, description, basePrice, sizes, extraIngredientsPrices } = item;
+    const hasSizesOrExtras = sizes?.length > 0 || extraIngredientsPrices?.length > 0
   return (
     <div className="bg-gray-200 p-4 rounded-lg text-center hover:bg-white transition-all hover:shadow-md duration-300 hover:shadow-black/25">
       <div className="text-center">
@@ -18,7 +19,7 @@ function menuItemBox({onAddToCart, ...item}) {
         onClick={onAddToCart}
         className="bg-primary mt-4 rounded-full text-white px-8 py-2"
       >
-        {(sizes?.length > 0 || extraIngredientsPrices?.length > 0) ? (
+        {(hasSizesOrExtras) ? (
           <span>Add to cart (From ${basePrice})</span>
         ) : (
           <span>Add to cart ${basePrice}</span>

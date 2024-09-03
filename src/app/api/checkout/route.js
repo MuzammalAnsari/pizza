@@ -62,9 +62,12 @@ export async function POST(req){
         line_items: stripeLineItems,
         mode: 'payment',
         customer_email: userEmail,
-        success_url: process.env.NEXTAUTH_URL + 'cart?success=1',
+        success_url: process.env.NEXTAUTH_URL + 'order/' + OrderDoc._id.toString(),
         cancel_url: process.env.NEXTAUTH_URL + 'cart?cancelled=1',
-        metadata: { orderId: OrderDoc._id.toString() },
+        metadata: { orderId: OrderDoc._id.toString()},
+        payment_intent_data: {
+            metadata: { orderId: OrderDoc._id.toString()},
+        },
         shipping_options:[
             {
                 shipping_rate_data: {

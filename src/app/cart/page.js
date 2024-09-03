@@ -7,11 +7,21 @@ import Image from "next/image";
 import Trash from "../../components/icons/trash";
 import AddressInputs from "../../components/layout/AddressInputs";
 import { useProfile } from "../../components/layout/useProfile";
+import toast from "react-hot-toast";
 
 export default function CartPage() {
   const { cartProducts, removeCartProduct } = useContext(cartContext);
   const [address, setAddress] = useState({});
   const { data: loggedInUserData } = useProfile();
+
+  useEffect(()=>{
+    if(typeof window !== 'undefined'){
+      if(window.location.href.includes('cancelled=1')){
+        toast.error('Payment canceled!')
+      }
+    }
+
+  },[])
 
   useEffect(() => {
     if (loggedInUserData?.city) {
@@ -34,22 +44,32 @@ export default function CartPage() {
   async function proceedToCheckout(ev) {
     ev.preventDefault();
     //address and shopping cart product
-    const response = await fetch('/api/checkout',{
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        address,
-        cartProducts
+    const promise = new Promise((resolve, reject)=>{
+       fetch('/api/checkout',{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          address,
+          cartProducts
+        })
+      }).then(async (response) => {
+        if (response.ok) {
+          resolve();
+          //redirect to stripe
+          window.location = await response.json();
+        }else(
+          reject()
+        )
       })
-    });
-    // const link = await response.json();
-    // window.location = link
+    })
 
-
-    //redirect to stripe
-
+    await toast.promise(promise, {
+      loading: 'Prepairing your order...',
+      success: 'Redirecting to payment...',
+      error: 'Something went wrong... Please try again later'
+    })
   }
   
 

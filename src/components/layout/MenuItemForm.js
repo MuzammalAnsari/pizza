@@ -43,7 +43,7 @@ export default function MenuItemForm({ onSubmit, menuItem }) {
       className="mt-8 "
     >
       <div
-        className="flex items-start gap-4"
+        className="md:grid items-start gap-4"
         style={{ gridTemplateColumns: ".3fr .7fr" }}
       >
         <div className="max-w-[150px]">

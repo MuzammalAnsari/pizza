@@ -9,19 +9,18 @@ export default function MenuItem(menuItem) {
     menuItem;
   const [selectedSize, setSelectedSize] = useState(sizes[0] || null);
   const [selectedExtras, setSelectedExtras] = useState([]);
-
   const [showPopup, setShowPopup] = useState(false);
   const { addToCart } = useContext(cartContext);
 
   function handleToAddCartClick() {
-    const hasOptions = sizes.length > 0 || extraIngredientsPrices > 0;
+    const hasOptions = sizes.length > 0 || extraIngredientsPrices.length > 0;
     if (hasOptions && !showPopup) {
       setShowPopup(true);
       return;
     }
     addToCart(menuItem, selectedSize, selectedExtras);
     setShowPopup(false);
-    toast.success("added to cart!");
+    toast.success("Added to cart!");
   }
 
   function handleExtraThingClick(ev, extraThing) {
@@ -29,22 +28,20 @@ export default function MenuItem(menuItem) {
     if (checked) {
       setSelectedExtras((prev) => [...prev, extraThing]);
     } else {
-      setSelectedExtras((prev) => {
-        return prev.filter((item) => item !== extraThing.name);
-      });
+      setSelectedExtras((prev) => prev.filter((item) => item !== extraThing));
     }
   }
 
-  //total price
-  let seletdPrice = basePrice;
+  // Calculate total price
+  let selectedPrice = basePrice;
 
   if (selectedSize) {
-    seletdPrice += selectedSize.price;
+    selectedPrice += selectedSize.price;
   }
   if (selectedExtras?.length > 0) {
-    for (const extra of selectedExtras) {
-      seletdPrice += extra.price;
-    }
+    selectedExtras.forEach((extra) => {
+      selectedPrice += extra.price;
+    });
   }
 
   return (
@@ -56,7 +53,7 @@ export default function MenuItem(menuItem) {
         >
           <div
             onClick={(ev) => ev.stopPropagation()}
-            className="bg-white my-8 p-2 rounded-lg max-w-md "
+            className="bg-white my-8 p-2 rounded-lg max-w-md"
           >
             <div
               className="overflow-y-scroll p-2"
@@ -73,15 +70,20 @@ export default function MenuItem(menuItem) {
               <p className="text-gray-500 text-center text-sm mb-2">
                 {description}
               </p>
+
+              {/* Size selection */}
               {sizes?.length > 0 && (
                 <div className="p-2">
                   <p className="text-lg font-semibold text-gray-700 text-center">
                     Sizes
                   </p>
                   {sizes.map((size) => (
-                    <label className="flex items-center mb-1 gap-2 p-2 border rounded-md">
+                    <label
+                      key={size._id}
+                      className="flex items-center mb-1 gap-2 p-2 border rounded-md"
+                    >
                       <input
-                        onClick={() => setSelectedSize(size)}
+                        onChange={() => setSelectedSize(size)}
                         checked={selectedSize?.name === size.name}
                         type="radio"
                         name="size"
@@ -91,16 +93,24 @@ export default function MenuItem(menuItem) {
                   ))}
                 </div>
               )}
+
+              {/* Extra ingredients */}
               {extraIngredientsPrices?.length > 0 && (
                 <div className="p-2">
                   <p className="text-lg font-semibold text-gray-700 text-center">
                     Any extras?
                   </p>
                   {extraIngredientsPrices.map((extraThings) => (
-                    <label className="flex items-center mb-1 gap-2 p-2 border rounded-md">
+                    <label
+                      key={extraThings._id}
+                      className="flex items-center mb-1 gap-2 p-2 border rounded-md"
+                    >
                       <input
-                        onClick={(ev) => handleExtraThingClick(ev, extraThings)}
+                        onChange={(ev) =>
+                          handleExtraThingClick(ev, extraThings)
+                        }
                         type="checkbox"
+                        checked={selectedExtras.map((e) => e._id).includes(extraThings._id)}
                         name={extraThings.name}
                       />
                       {extraThings.name} +${extraThings.price}
@@ -108,14 +118,19 @@ export default function MenuItem(menuItem) {
                   ))}
                 </div>
               )}
+
               <button
                 onClick={handleToAddCartClick}
                 type="button"
                 className="primary sticky bottom-2 mb-1"
               >
-                Add to cart ${seletdPrice}
+                Add to cart ${selectedPrice}
               </button>
-              <button type="button" onClick={() => setShowPopup(false)}>
+              <button
+                type="button"
+                onClick={() => setShowPopup(false)}
+                className="secondary"
+              >
                 Cancel
               </button>
             </div>

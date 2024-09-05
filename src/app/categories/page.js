@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import DeleteButton from "../../components/DeleteButton";
 
-
 export default function CategoriesPage() {
   const [categoryName, setCategoryName] = useState("");
   const [categories, setCategories] = useState([]);
@@ -62,20 +61,19 @@ export default function CategoriesPage() {
   }
 
   //handle Delete
-async function handleDeleteCategory(_id) {
+  async function handleDeleteCategory(_id) {
     // console.log(_id);
 
     const deletionPromise = new Promise(async (resolve, reject) => {
-      const response = await fetch('/api/categories?_id='+_id,{
-        method: 'DELETE'
-      })
+      const response = await fetch("/api/categories?_id=" + _id, {
+        method: "DELETE",
+      });
       if (response.ok) {
         resolve();
       } else {
         reject();
       }
     });
-
 
     await toast.promise(deletionPromise, {
       loading: "Deleting category...",
@@ -116,10 +114,15 @@ async function handleDeleteCategory(_id) {
             <button type="submit">
               {editedCategory ? "Update" : "Create"}
             </button>
-            <button type="button" onClick={()=>{
-                setEditedCategory(null)
-                setCategoryName('')
-                }}>cancel</button>
+            <button
+              type="button"
+              onClick={() => {
+                setEditedCategory(null);
+                setCategoryName("");
+              }}
+            >
+              cancel
+            </button>
           </div>
         </div>
       </form>
@@ -128,12 +131,14 @@ async function handleDeleteCategory(_id) {
         <h2 className="text-sm text-gray-500">Existing Category:</h2>
         {categories?.length > 0 &&
           categories.map((category) => (
-            <div className="rounded-xl p-2 bg-gray-100 mb-1 flex gap-1 items-center">
-              <div className="grow">
-                {category.name}
-              </div>
+            <div
+              key={category._id}
+              className="rounded-xl p-2 bg-gray-100 mb-1 flex gap-1 items-center"
+            >
+              <div className="grow">{category.name}</div>
               <div className="flex gap-1">
-                <button type="button"
+                <button
+                  type="button"
                   onClick={() => {
                     setEditedCategory(category);
                     setCategoryName(category.name);
@@ -141,8 +146,10 @@ async function handleDeleteCategory(_id) {
                 >
                   Edit
                 </button>
-                <DeleteButton label='Delete'
-                 onDelete={()=>handleDeleteCategory(category._id)}/>
+                <DeleteButton
+                  label="Delete"
+                  onDelete={() => handleDeleteCategory(category._id)}
+                />
               </div>
             </div>
           ))}

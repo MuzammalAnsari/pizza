@@ -3,83 +3,85 @@
 import { useContext, useEffect, useState } from "react";
 import SectionHeaders from "../../components/layout/SectionHeaders";
 import { cartContext, cartProductPrice } from "../../components/AppContext";
-import Image from "next/image";
-import Trash from "../../components/icons/trash";
-import AddressInputs from "../../components/layout/AddressInputs";
-import { useProfile } from "../../components/layout/useProfile";
 import toast from "react-hot-toast";
 import CartProduct from "../../components/menu/CartProduct";
+import AddressInputs from "../../components/layout/AddressInputs";
+import { useProfile } from "../../components/layout/useProfile";
 
 export default function CartPage() {
   const { cartProducts, removeCartProduct } = useContext(cartContext);
   const [address, setAddress] = useState({});
   const { data: loggedInUserData } = useProfile();
 
-  useEffect(()=>{
-    if(typeof window !== 'undefined'){
-      if(window.location.href.includes('cancelled=1')){
-        toast.error('Payment canceled!')
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (window.location.href.includes("cancelled=1")) {
+        toast.error("Payment canceled!");
       }
     }
-
-  },[])
+  }, []);
 
   useEffect(() => {
     if (loggedInUserData?.city) {
-      const { phone, streetAddress, city, postalCode, country } = loggedInUserData;
-      const addressFromProfile = { phone, streetAddress, city, postalCode, country };
+      const { phone, streetAddress, city, postalCode, country } =
+        loggedInUserData;
+      const addressFromProfile = {
+        phone,
+        streetAddress,
+        city,
+        postalCode,
+        country,
+      };
       setAddress(addressFromProfile);
     }
   }, [loggedInUserData]);
 
-  function handleAddressChange() {
+  // Dynamic address change handler
+  function handleAddressChange(propName, value) {
     setAddress((prev) => ({ ...prev, [propName]: value }));
   }
 
   let subtotal = 0;
-  for (const p in cartProducts) {
-    subtotal += cartProductPrice(cartProducts[p]);
+  for (const p of cartProducts) {
+    subtotal += cartProductPrice(p);
   }
 
-  //proceedToCheckout
+  // Proceed to checkout
   async function proceedToCheckout(ev) {
     ev.preventDefault();
-    //address and shopping cart product
-    const promise = new Promise((resolve, reject)=>{
-       fetch('/api/checkout',{
-        method: 'POST',
+    const promise = new Promise((resolve, reject) => {
+      fetch("/api/checkout", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           address,
-          cartProducts
-        })
+          cartProducts,
+        }),
       }).then(async (response) => {
         if (response.ok) {
           resolve();
-          //redirect to stripe
+          // Redirect to Stripe payment
           window.location = await response.json();
-        }else(
-          reject()
-        )
-      })
-    })
+        } else reject();
+      });
+    });
 
     await toast.promise(promise, {
-      loading: 'Prepairing your order...',
-      success: 'Redirecting to payment...',
-      error: 'Something went wrong... Please try again later'
-    })
+      loading: "Preparing your order...",
+      success: "Redirecting to payment...",
+      error: "Something went wrong... Please try again later",
+    });
   }
-  
-  if(cartProducts?.length === 0){
+
+  if (cartProducts?.length === 0) {
     return (
       <div className="text-center">
         <SectionHeaders mainHeader="Cart" />
         <h1 className="text-center font-extrabold">Cart is empty</h1>
       </div>
-    )
+    );
   }
 
   return (
@@ -94,22 +96,25 @@ export default function CartPage() {
           )}
           {cartProducts?.length > 0 &&
             cartProducts.map((product, index) => (
-              <CartProduct product={product} onRemove={removeCartProduct}/>
+              <CartProduct
+                key={index}
+                product={product}
+                onRemove={removeCartProduct}
+              />
             ))}
           <div className="py-2 pr-16 flex justify-end items-center">
             <div className="text-gray-500">
-              Subtotal: <br/>
-              Delivery: <br/>
+              Subtotal: <br />
+              Delivery: <br />
               Total:
             </div>
             <span className="font-semibold pl-2 text-right">
-              ${subtotal} <br/>
-              $5 <br/>
-              ${subtotal+5}
-              </span>
+              ${subtotal} <br />
+              $5 <br />${subtotal + 5}
+            </span>
           </div>
         </div>
-        
+
         <div className="bg-gray-100 p-4 rounded-lg">
           <h2>Checkout</h2>
           <form onSubmit={proceedToCheckout}>
@@ -118,7 +123,12 @@ export default function CartPage() {
               setAddressProp={handleAddressChange}
             />
 
-            <button type="submit">Pay ${subtotal+5}</button>
+            <button
+              type="submit"
+              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg"
+            >
+              Pay ${subtotal + 5}
+            </button>
           </form>
         </div>
       </div>

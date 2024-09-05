@@ -21,7 +21,7 @@ export default function HomeMenu() {
         <section className="">
             <div className="absolute left-0 right-0 w-full justify-start">
                 <div className="absolute left-0 -top-[70px] -z-10 text-left">
-                    <Image src={'/sallad1.png'} width={109} height={189} />
+                    <Image src={'/sallad1.png'} width={109} height={189} alt={'Pizza'}/>
                 </div>
                 <div className="h-48  absolute right-0 -top-24 -z-10">
                     <Image src={'/sallad2.png'} width={107} height={195} />
@@ -33,13 +33,10 @@ export default function HomeMenu() {
                     mainHeader={'Our Best Sellers'}
                 />
             </div>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid sm:grid-cols-3 gap-4">
                 {bestSellers?.length > 0 && bestSellers.map(item => {
                         return (
-                            <MenuItem
-                                // key={item._id}
-                                {...item}
-                            />
+                            <MenuItem {...item} key={item._id} />
                         )
                     })
                 }

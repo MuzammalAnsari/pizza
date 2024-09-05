@@ -10,7 +10,6 @@ import { redirect } from "next/navigation";
 import MenuItemForm from "../../../components/layout/MenuItemForm";
 
 export default function NewMenuItemPage() {
-
   const [redirectToItems, setRedirectToItems] = useState(false);
   const { loading, data } = useProfile();
 
@@ -62,7 +61,7 @@ export default function NewMenuItemPage() {
           <Left />
         </Link>
       </div>
-<MenuItemForm menuItem={null} onSubmit={handleFormSubmit}/>
+      <MenuItemForm menuItem={null} onSubmit={handleFormSubmit} />
     </section>
   );
 }

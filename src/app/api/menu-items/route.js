@@ -8,18 +8,16 @@ const data = await req.json()
 if(await isAdmin()){
     const menuItemDoc = await MenuItem.create(data)
     return Response.json(menuItemDoc)
+}else{
+    return Response.json({})
 }
 }
 
 //get
 export async function GET() {
     mongoose.connect(process.env.MONGO_URL)
-    if(await isAdmin()){
-        const menuItems = await MenuItem.find()
-        return Response.json(menuItems)
-    }else{
-        return Response.json([])
-    }
+    const menuItems = await MenuItem.find()
+    return Response.json(menuItems)
 }
 
 //put

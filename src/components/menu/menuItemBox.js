@@ -8,7 +8,7 @@ function menuItemBox({onAddToCart, ...item}) {
       <div className="text-center">
         <img
           src={image}
-          alt="pizza"
+          alt={name}
           className="max-h-auto max-h-24 block mx-auto"
         />
       </div>

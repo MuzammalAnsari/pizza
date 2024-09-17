@@ -15,7 +15,7 @@ function UserForm({ user = {}, onSave }) {
   const { data: loggedInUserData } = useProfile();
 
   function handleAddressChange(propName, value) {
-    console.log(`Updating ${propName} with value: ${value}`);
+    // console.log(`Updating ${propName} with value: ${value}`);
     if (propName === "phone") setPhone(value); 
     if (propName === "streetAddress") setStreetAddress(value);
     if (propName === "postalCode") setPostalCode(value);

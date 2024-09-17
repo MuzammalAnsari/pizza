@@ -10,7 +10,10 @@ import { UserInfo } from "../../../models/userInfo";
 
 export const authOptions = {
   secret: process.env.SECRET,
-  adapter: MongoDBAdapter(await clientPromise),
+  adapter: MongoDBAdapter(clientPromise),
+  session: {
+    strategy: "jwt",
+  },
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,

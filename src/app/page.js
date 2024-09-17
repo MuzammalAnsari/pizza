@@ -2,6 +2,7 @@
 import Hero from "../components/layout/Hero";
 import HomeMenu from "../components/layout/HomeMenu";
 import SectionHeaders from "../components/layout/SectionHeaders";
+// import SectionHeaders from "../components/layout/SectionHeaders";
 
 export default function Home() {
   return (
@@ -10,40 +11,36 @@ export default function Home() {
       <Hero />
       <HomeMenu />
 
-      <section className="text-center my-16" id="about">
+      <section className="text-center my-16" id="services">
         <SectionHeaders
-          subHeader={'Our Story'}
-          mainHeader={'About Us'}
+          subHeader={'What We Offer'}
+          mainHeader={'Our Services'}
         />
 
         <div className='text-gray-500 max-w-md mx-auto mt-4 flex flex-col gap-4'>
           <p>
-            Out believe has request not how comfort evident.
-            Up delight cousins we feeling minutes. Genius has looked end piqued spring.
-            Down has rose feel find man. Learning day desirous informed expenses material returned
-            six the. She enabled invited exposed him another. Reasonably conviction solicitude
-            me mr at discretion reasonable. Age out full gate bed day lose.
+            We provide a wide range of services to meet your needs.
+            Our team is dedicated to delivering top-notch solutions.
+            From consulting to implementation, we've got you covered.
           </p>
           <p>
-            Out believe has request not how comfort evident.
-            Up delight cousins we feeling minutes. Genius has looked end piqued spring.
-            Down has rose feel find man.
+            Our expertise spans various industries and technologies.
+            We tailor our services to ensure the best outcomes for our clients.
           </p>
           <p>
-            Out believe has request not how comfort evident.
-            Up delight cousins we feeling minutes.
+            Contact us today to learn more about how we can help you achieve your goals.
           </p>
         </div>
       </section>
 
-      <section className="text-center my-8 " id="contact">
+      <section className="text-center my-8 " id="team">
         <SectionHeaders
-          subHeader={'Don\'t Hesitate'}
-          mainHeader={'Contact Us'}
+          subHeader={'Meet the Experts'}
+          mainHeader={'Our Team'}
         />
         <div className="mt-8">
-          <a href='123456789' className='text-4xl underline text-gray-500'>
-            123456789
+          <a href='mailto:info@example.com' className='text-4xl underline text-gray-500'>
+            info@example.com
           </a>
         </div>
       </section>

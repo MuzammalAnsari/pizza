@@ -20,7 +20,6 @@ export default function MenuItem(menuItem) {
     }
     addToCart(menuItem, selectedSize, selectedExtras);
     setShowPopup(false);
-    toast.success("Added to cart!");
   }
 
   function handleExtraThingClick(ev, extraThing) {
@@ -56,7 +55,7 @@ export default function MenuItem(menuItem) {
             className="bg-white my-8 p-2 rounded-lg max-w-md"
           >
             <div
-              className="overflow-y-scroll p-2"
+              className="overflow-y-scroll p-2 rounded-lg"
               style={{ maxHeight: "calc(100vh - 80px)" }}
             >
               <Image
@@ -64,7 +63,7 @@ export default function MenuItem(menuItem) {
                 alt={name}
                 width={300}
                 height={200}
-                className="mx-auto"
+                className="mx-auto "
               />
               <p className="text-lg font-semibold text-center">{name}</p>
               <p className="text-gray-500 text-center text-sm mb-2">

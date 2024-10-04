@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { useProfile } from "../../components/layout/useProfile";
 import UserTabs from "../../components/layout/userTabs";
 import Link from "next/link";
+import Loader from "../../components/loader/loader";
+
 
 export default function UserPage() {
   const [users, setUsers] = useState([]);
@@ -18,7 +20,11 @@ export default function UserPage() {
   }, []);
 
   if (loading) {
-    return "Loading user info...";
+    return (
+      <div className="text-center" style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "60vh" }}>
+        <Loader />
+      </div>
+    )
   }
 
   if (!data.admin) {

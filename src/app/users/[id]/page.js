@@ -6,6 +6,7 @@ import UserForm from "../../../components/layout/UserForm";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import toast from 'react-hot-toast';
+import Loader from "../../../components/loader/loader";
 
 function EditUserPage() {
     const { loading, data } = useProfile();
@@ -43,7 +44,11 @@ function EditUserPage() {
       }
 
     if (loading) {
-        return "Loading user info...";
+      return (
+        <div className="text-center" style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "60vh" }}>
+          <Loader />
+        </div>
+      )
     }
 
     if (!data.admin) {

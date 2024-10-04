@@ -5,6 +5,7 @@ import UserTabs from "../../components/layout/userTabs";
 import Right from "../../components/icons/Right";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Loader from "../../components/loader/loader";
 
 export default function MenuItemsPage() {
   const [menuItems, setMenuItems] = useState([]);
@@ -19,7 +20,11 @@ export default function MenuItemsPage() {
   }, []);
 
   if (loading) {
-    return "Loading user info...";
+    return (
+      <div className="text-center" style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "60vh" }}>
+        <Loader />
+      </div>
+    )
   }
 
   if (!data.admin) {

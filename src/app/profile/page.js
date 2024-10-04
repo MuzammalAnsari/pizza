@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import UserTabs from "../../components/layout/userTabs";
 import UserForm from "../../components/layout/UserForm";
+import Loader from "../../components/loader/loader";
 
 export default function ProfilePage() {
     const session = useSession();
@@ -42,7 +43,11 @@ export default function ProfilePage() {
     }
 
     if (status === 'loading' || !profileFetched) {
-        return 'loading...'
+        return (
+            <div className="text-center" style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "60vh" }}>
+              <Loader />
+            </div>
+          )
     }
 
     if (status === 'unauthenticated') {

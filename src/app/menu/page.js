@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import SectionHeaders from "../../components/layout/SectionHeaders";
 import MenuItems from "../../components/menu/MenuItems";
+import Loader from "../../components/loader/loader";
 
 function MenuPage() {
   const [categories, setCategories] = useState([]);
@@ -33,7 +34,11 @@ function MenuPage() {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="text-center" style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "10vh" }}>
+        <Loader />
+      </div>
+    )
   }
 
   return (

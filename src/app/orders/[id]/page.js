@@ -5,6 +5,8 @@ import { cartContext, cartProductPrice } from "../../../components/AppContext";
 import { useParams } from "next/navigation";
 import AddressInputs from "../../../components/layout/AddressInputs";
 import CartProduct from "../../../components/menu/CartProduct";
+import Loader from "../../components/loader/loader";
+
 
 export default function OrderPage() {
   const [order, setOrder] = useState();
@@ -46,7 +48,9 @@ export default function OrderPage() {
         </div>
       </div>
       {loadingOrders && (
-        <div>Loading order...</div>
+          <div className="text-center" style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "60vh" }}>
+            <Loader />
+          </div>
       )}
       {order && (
         <div className="grid md:grid-cols-2 md:gap-16">

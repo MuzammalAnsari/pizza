@@ -4,6 +4,7 @@ import { useProfile } from "../../components/layout/useProfile";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import DeleteButton from "../../components/DeleteButton";
+import Loader from "../../components/loader/loader";
 
 export default function CategoriesPage() {
   const [categoryName, setCategoryName] = useState("");
@@ -84,7 +85,11 @@ export default function CategoriesPage() {
   }
 
   if (profileLoading) {
-    return "Loading user info...";
+    return (
+      <div className="text-center" style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "60vh" }}>
+        <Loader />
+      </div>
+    )
   }
 
   if (!profileData.admin) {

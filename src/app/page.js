@@ -1,7 +1,7 @@
 
 import Hero from "../components/layout/Hero";
 import HomeMenu from "../components/layout/HomeMenu";
-import SectionHeaders from "../components/layout/SectionHeaders";
+import MenuPage from "./menu/page";
 // import SectionHeaders from "../components/layout/SectionHeaders";
 
 export default function Home() {
@@ -11,7 +11,11 @@ export default function Home() {
       <Hero />
       <HomeMenu />
 
-      <section className="text-center my-16" id="services">
+      <MenuPage/>
+
+
+
+      {/* <section className="text-center my-16" id="services">
         <SectionHeaders
           subHeader={'What We Offer'}
           mainHeader={'Our Services'}
@@ -43,7 +47,7 @@ export default function Home() {
             info@example.com
           </a>
         </div>
-      </section>
+      </section> */}
 
     </>
   );

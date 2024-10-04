@@ -8,6 +8,8 @@ import Link from "next/link";
 import Left from "../../../components/icons/Left";
 import { redirect } from "next/navigation";
 import MenuItemForm from "../../../components/layout/MenuItemForm";
+import Loader from "../../../components/loader/loader";
+
 
 export default function NewMenuItemPage() {
   const [redirectToItems, setRedirectToItems] = useState(false);
@@ -45,7 +47,12 @@ export default function NewMenuItemPage() {
   }
 
   if (loading) {
-    return "Loading User Info....";
+    return (
+      // <div>loading...</div>
+      <div className="text-center" style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "60vh" }}>
+        <Loader />
+      </div>
+    )
   }
 
   if (!data.admin) {

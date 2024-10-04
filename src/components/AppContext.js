@@ -5,14 +5,15 @@ import toast from "react-hot-toast";
 
 export const cartContext = createContext({});
 
+// Function to calculate the price of a cart product
 export function cartProductPrice(cartProduct) {
   let price = cartProduct.basePrice;
   if (cartProduct.size) {
     price += cartProduct.size.price;
   }
   if (cartProduct.extras?.length > 0) {
-    for(const extra of cartProduct.extras){
-      price += extra.price
+    for (const extra of cartProduct.extras) {
+      price += extra.price;
     }
   }
   return price;
@@ -21,53 +22,49 @@ export function cartProductPrice(cartProduct) {
 export function AppProvider({ children }) {
   const [cartProducts, setCartProducts] = useState([]);
 
-  // save cart to localstorage to handle disappering of cart added products after page refresh
+  // Load cart from local storage on initial render
   useEffect(() => {
-    const lsCartProducts = ls?.getItem("cart");
-    if (lsCartProducts) {
-      setCartProducts(JSON.parse(lsCartProducts));
+    if (typeof window !== "undefined") {
+      const storedCart = localStorage.getItem("cart");
+      if (storedCart) {
+        setCartProducts(JSON.parse(storedCart));
+      }
     }
   }, []);
 
-  const ls = typeof window !== "undefined" ? window.localStorage : null;
-  const saveCartProductsToLocalStorage = (cartProducts) => {
-    if (ls) {
-      ls.setItem("cart", JSON.stringify(cartProducts));
+  // Save cart to local storage whenever it changes
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("cart", JSON.stringify(cartProducts));
     }
-  };
+  }, [cartProducts]);
 
-  //clear cart function
+  // Clear the cart
   function clearCart() {
     setCartProducts([]);
-    saveCartProductsToLocalStorage([]);
+    toast.success("Cart cleared!");
   }
 
-  // remove product from cart
-  function removeCartProduct(indexTORemove) {
-    setCartProducts((prevProducts) => {
-      const newProducts = prevProducts.filter(
-        (v, index) => index !== indexTORemove
-      );
-      saveCartProductsToLocalStorage(newProducts);
-      return newProducts;
-    });
-    toast.success('Product Removed')
+  // Remove product from the cart by id
+  function removeCartProduct(productId) {
+    setCartProducts((prevProducts) =>
+      prevProducts.filter((product) => product._id !== productId)
+    );
+    toast.success("Product removed");
   }
 
+  // Add a product to the cart
   function addToCart(product, size = null, extras = []) {
-    setCartProducts((prevProducts) => {
-      const cartProduct = { ...product, size, extras };
-      const newProducts = [...prevProducts, cartProduct];
-      saveCartProductsToLocalStorage(newProducts);
-      return newProducts;
-    });
+    const newProduct = { ...product, size, extras };
+    setCartProducts((prevProducts) => [...prevProducts, newProduct]);
+    toast.success("Product added to cart!"); // Uncomment this line to show a toast
   }
+
   return (
     <SessionProvider>
       <cartContext.Provider
         value={{
           cartProducts,
-          setCartProducts,
           addToCart,
           removeCartProduct,
           clearCart,

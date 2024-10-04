@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { redirect, useParams } from "next/navigation";
 import { useProfile } from "../../../../components/layout/useProfile";
 import MenuItemForm from "../../../../components/layout/MenuItemForm";
+import Loader from "../../../../components/loader/loader";
 
 export default function EditMenuItemPage() {
   const { id } = useParams();
@@ -84,7 +85,11 @@ export default function EditMenuItemPage() {
   }
 
   if (loading) {
-    return "Loading User Info....";
+    return (
+      <div className="text-center" style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "60vh" }}>
+        <Loader />
+      </div>
+    )
   }
 
   if (!data.admin) {

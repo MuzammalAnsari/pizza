@@ -4,6 +4,7 @@ import UserTabs from "../../components/layout/userTabs";
 import { useProfile } from "../../components/layout/useProfile";
 import dbTimeForHuman from "../../libs/datetime";
 import Link from "next/link";
+import Loader from "../../components/loader/loader";
 
 export default function OrderPage() {
   const [orders, setOrders] = useState([]);
@@ -31,8 +32,10 @@ export default function OrderPage() {
     <section className="mt-8 max-w-2xl mx-auto">
       <UserTabs isAdmin={profile.admin} />
       <div className="mt-8">
-        {loadingOrders && (
-          <div>Loading orders...</div>
+        {loadingOrders && (         
+            <div className="text-center" style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "60vh" }}>
+              <Loader />
+            </div>
         )}
         {orders?.length > 0 && orders.map(order => (
           <div

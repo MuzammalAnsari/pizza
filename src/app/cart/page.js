@@ -8,7 +8,7 @@ import CartProduct from "../../components/menu/CartProduct";
 import AddressInputs from "../../components/layout/AddressInputs";
 import { useProfile } from "../../components/layout/useProfile";
 import { useSession } from "next-auth/react";
-import Loader from "../../components/loader/loader";
+import Loader from "../../components/loader/Loader";
 
 
 export default function CartPage() {

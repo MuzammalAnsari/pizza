@@ -8,7 +8,7 @@ import Link from "next/link";
 import Left from "../../../components/icons/Left";
 import { redirect } from "next/navigation";
 import MenuItemForm from "../../../components/layout/MenuItemForm";
-import Loader from "../../../components/loader/loader";
+import Loader from "../../../components/loader/Loader";
 
 
 export default function NewMenuItemPage() {

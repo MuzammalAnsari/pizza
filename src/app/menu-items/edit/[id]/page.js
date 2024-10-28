@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { redirect, useParams } from "next/navigation";
 import { useProfile } from "../../../../components/layout/useProfile";
 import MenuItemForm from "../../../../components/layout/MenuItemForm";
-import Loader from "../../../../components/loader/loader";
+import Loader from "../../../../components/loader/Loader";
 
 export default function EditMenuItemPage() {
   const { id } = useParams();

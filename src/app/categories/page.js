@@ -4,7 +4,7 @@ import { useProfile } from "../../components/layout/useProfile";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import DeleteButton from "../../components/DeleteButton";
-import Loader from "../../components/loader/loader";
+import Loader from "../../components/loader/Loader";
 
 export default function CategoriesPage() {
   const [categoryName, setCategoryName] = useState("");

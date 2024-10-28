@@ -5,7 +5,7 @@ import UserTabs from "../../components/layout/userTabs";
 import Right from "../../components/icons/Right";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import Loader from "../../components/loader/loader";
+import Loader from "../../components/loader/Loader";
 
 export default function MenuItemsPage() {
   const [menuItems, setMenuItems] = useState([]);

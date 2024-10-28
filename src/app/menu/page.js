@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import SectionHeaders from "../../components/layout/SectionHeaders";
 import MenuItems from "../../components/menu/MenuItems";
-import Loader from "../../components/loader/loader";
+import Loader from "../../components/loader/Loader";
 
 function MenuPage() {
   const [categories, setCategories] = useState([]);

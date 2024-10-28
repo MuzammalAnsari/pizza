@@ -4,7 +4,7 @@ import UserTabs from "../../components/layout/userTabs";
 import { useProfile } from "../../components/layout/useProfile";
 import dbTimeForHuman from "../../libs/datetime";
 import Link from "next/link";
-import Loader from "../../components/loader/loader";
+import Loader from "../../components/loader/Loader";
 
 export default function OrderPage() {
   const [orders, setOrders] = useState([]);

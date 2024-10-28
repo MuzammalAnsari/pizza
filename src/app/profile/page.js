@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import UserTabs from "../../components/layout/userTabs";
 import UserForm from "../../components/layout/UserForm";
-import Loader from "../../components/loader/loader";
+import Loader from "../../components/loader/Loader";
 
 export default function ProfilePage() {
     const session = useSession();

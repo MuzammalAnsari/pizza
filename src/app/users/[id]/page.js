@@ -6,7 +6,7 @@ import UserForm from "../../../components/layout/UserForm";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import toast from 'react-hot-toast';
-import Loader from "../../../components/loader/loader";
+import Loader from "../../../components/loader/Loader";
 
 function EditUserPage() {
     const { loading, data } = useProfile();

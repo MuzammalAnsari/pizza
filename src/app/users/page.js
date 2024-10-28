@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useProfile } from "../../components/layout/useProfile";
 import UserTabs from "../../components/layout/userTabs";
 import Link from "next/link";
-import Loader from "../../components/loader/loader";
+import Loader from "../../components/loader/Loader";
 
 
 export default function UserPage() {

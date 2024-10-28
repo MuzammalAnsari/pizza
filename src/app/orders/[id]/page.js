@@ -5,7 +5,7 @@ import { cartContext, cartProductPrice } from "../../../components/AppContext";
 import { useParams } from "next/navigation";
 import AddressInputs from "../../../components/layout/AddressInputs";
 import CartProduct from "../../../components/menu/CartProduct";
-import Loader from "../../components/loader/Loader";
+import Loader from "../../../components/loader/Loader";
 
 
 export default function OrderPage() {

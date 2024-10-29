@@ -4,6 +4,7 @@ import ChevronDown from "../icons/ChevronDown";
 import ChevronUp from "../icons/ChevronUp";
 import { useState } from "react";
 
+
 export default function MenuItemPriceProps({
   name,
   props,

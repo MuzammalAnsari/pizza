@@ -1,4 +1,4 @@
-import Trash from "../icons/trash";
+import Trash from "../icons/Trash";
 import Plus from "../icons/Plus";
 import ChevronDown from "../icons/ChevronDown";
 import ChevronUp from "../icons/ChevronUp";

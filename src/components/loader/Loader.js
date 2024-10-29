@@ -1,5 +1,5 @@
 // Loader.jsx
-import './Loader.css'; // Scoped CSS for the loader
+import './loader.css'; // Scoped CSS for the loader
 
 const Loader = () => {
   return (

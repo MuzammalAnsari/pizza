@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { cartProductPrice } from "../AppContext";
-import Trash from "../icons/trash";
+import Trash from "../icons/Trash";
 
 export default function CartProduct({ product, onRemove, index }) { // added 'index' as a prop
   return (

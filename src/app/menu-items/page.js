@@ -50,7 +50,7 @@ export default function MenuItemsPage() {
                 className="bg-gray-300 rounded-lg p-4"
               >
                 <div className="relative max-w-[150px]">
-                  <Image src={item.image} className="rounded-md" width={200} height={200} />
+                  <Image src={item.image} className="rounded-md" width={200} height={200} alt={'item'}/>
                 </div>
                 <div className="text-center text-gray-500">{item.name}</div>
               </Link>

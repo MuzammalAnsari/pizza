@@ -1,5 +1,4 @@
 "use client";
-import EditableImage from "../../../components/layout/EditableImage";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import UserTabs from "../../../components/layout/userTabs";

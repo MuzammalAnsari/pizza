@@ -21,10 +21,10 @@ export default function HomeMenu() {
         <section className="">
             <div className="absolute left-0 right-0 w-full justify-start">
                 <div className="absolute left-0 -top-[70px] -z-10 text-left">
-                    <Image src={'/sallad1.png'} width={109} height={189} alt={'Pizza'}/>
+                    <Image src={'/sallad1.png'} width={109} height={189} alt={'salad'}/>
                 </div>
                 <div className="h-48  absolute right-0 -top-24 -z-10">
-                    <Image src={'/sallad2.png'} width={107} height={195} />
+                    <Image src={'/sallad2.png'} width={107} height={195} alt={'salad'} />
                 </div>
             </div>
             <div className="text-center mb-4">

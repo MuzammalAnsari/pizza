@@ -1,7 +1,6 @@
 import { useContext, useState } from "react";
 import { cartContext } from "../AppContext";
 import MenuItemBox from "./menuItemBox";
-import toast from "react-hot-toast";
 import Image from "next/image";
 
 export default function MenuItem(menuItem) {

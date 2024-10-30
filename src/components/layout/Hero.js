@@ -6,13 +6,14 @@ export default function Hero() {
     <section className="hero md:mt-4">
       <div className="py-8 md:py-12">
         <h1 className="text-4xl font-semibold">
-          Life's
+          Life&apos;s
           <br />
           a slice
           <br />
           with a&nbsp;
           <span className="text-primary">Pizza</span>
         </h1>
+
         <p className="my-6 text-gray-500 text-sm">
           Pizza is the ultimate comfort food, bringing joy and flavor to every
           moment

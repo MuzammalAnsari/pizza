@@ -1,6 +1,5 @@
-import React from "react";
 
-export default function page() {
+export default function Page() {
   return (
     <div className="mt-8">
       <div className="bg-red-600 text-white p-4 rounded-lg">

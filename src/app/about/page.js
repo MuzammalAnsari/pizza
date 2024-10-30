@@ -1,4 +1,3 @@
-
 export default function Page() {
   return (
     <div className="mt-8">
@@ -14,10 +13,11 @@ export default function Page() {
             freshest ingredients and baked to perfection.
           </p>
           <p className="mb-4">
-            There's a reason pizza is so beloved. Humans are drawn to foods that
-            are fatty, sweet, rich, and complex. Pizza has all of these
+            There&apos;s a reason pizza is so beloved. Humans are drawn to foods
+            that are fatty, sweet, rich, and complex. Pizza has all of these
             qualities, making it a universally loved dish.
           </p>
+
           <p className="mb-4">
             Our mission is to bring joy to our customers through delicious pizza
             and excellent service. Whether you're dining in or ordering out, we

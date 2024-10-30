@@ -1,14 +1,16 @@
 import mongoose from "mongoose";
 import { getServerSession } from "next-auth";
-import { authOptions, isAdmin } from "../auth/[...nextauth]/route";
+import { authOptions } from "../auth/[...nextauth]/route";
 import { Order } from "../../models/Order";
+import { isAdmin } from "../../utils/auth"
+
 
 export async function GET(req) {
     mongoose.connect(process.env.MONGO_URL)
 
     const session = await getServerSession(authOptions);
     const userEmail = session?.user?.email;
-    const admin = await isAdmin()
+    const admin = await isAdmin(req)
 
     const url = new URL(req.url);
     const _id = url.searchParams.get('_id');

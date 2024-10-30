@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 import { Category } from "../../models/Category";
-import { isAdmin } from "../auth/[...nextauth]/route";
+import { isAdmin } from "../../utils/auth";
 
 export async function POST(res) {
   mongoose.connect(process.env.MONGO_URL);
   const { name } = await res.json();
-  if (await isAdmin()) {
+  if (await isAdmin(req)) {
     const categoryDoc = await Category.create({ name });
     return Response.json(categoryDoc);
   } else {
@@ -22,7 +22,7 @@ export async function GET() {
 export async function PUT(res) {
   mongoose.connect(process.env.MONGO_URL);
   const { _id, name } = await res.json();
-  if (await isAdmin()) {
+  if (await isAdmin(req)) {
     await Category.findOneAndUpdate({ _id }, { name });
   }
   return Response.json(true);
@@ -32,7 +32,7 @@ export async function DELETE(req) {
   mongoose.connect(process.env.MONGO_URL);
   const url = new URL(req.url);
   const _id = url.searchParams.get("_id");
-  if (await isAdmin()) {
+  if (await isAdmin(req)) {
     await Category.deleteOne({ _id });
   }
   return Response.json(true);

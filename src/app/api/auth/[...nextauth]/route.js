@@ -53,14 +53,14 @@ export const authOptions = {
   ],
 };
 
-export async function isAdmin(req) {
-  const session = await getServerSession(authOptions);
-  const userEmail = session?.user?.email;
-  if (!userEmail) return false;
+// async function isAdmin(req) {
+//   const session = await getServerSession(authOptions);
+//   const userEmail = session?.user?.email;
+//   if (!userEmail) return false;
 
-  const userInfo = await UserInfo.findOne({ email: userEmail });
-  return userInfo ? userInfo.admin : false; // Return true or false based on admin status
-}
+//   const userInfo = await UserInfo.findOne({ email: userEmail });
+//   return userInfo ? userInfo.admin : false; // Return true or false based on admin status
+// }
 
 const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };

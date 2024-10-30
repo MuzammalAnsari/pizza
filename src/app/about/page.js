@@ -20,7 +20,7 @@ export default function Page() {
 
           <p className="mb-4">
             Our mission is to bring joy to our customers through delicious pizza
-            and excellent service. Whether you're dining in or ordering out, we
+            and excellent service. Whether you are dining in or ordering out, we
             strive to make every meal a memorable one.
           </p>
         </section>

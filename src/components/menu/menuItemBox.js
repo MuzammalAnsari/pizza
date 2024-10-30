@@ -12,8 +12,8 @@ function menuItemBox({ onAddToCart, ...item }) {
         <Image
           src={image}
           alt={name}
-          width={300} // Set the width based on your layout
-          height={100} // Set the height based on your layout
+          width={200} // Set the width based on your layout
+          height={150} // Set the height based on your layout
           className="h-auto max-h-24 block mx-auto"
         />
       </div>

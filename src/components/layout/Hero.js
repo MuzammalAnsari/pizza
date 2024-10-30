@@ -5,15 +5,14 @@ export default function Hero() {
   return (
     <section className="hero md:mt-4">
       <div className="py-8 md:py-12">
-        <h1 className="text-4xl font-semibold leading-snug">
-          Life&rsquo;s
+        <h1 className="text-4xl font-semibold">
+          Life's
           <br />
           a slice
           <br />
           with a&nbsp;
           <span className="text-primary">Pizza</span>
         </h1>
-
         <p className="my-6 text-gray-500 text-sm">
           Pizza is the ultimate comfort food, bringing joy and flavor to every
           moment
@@ -33,8 +32,12 @@ export default function Hero() {
         <Image
           src="/pizza.png"
           alt="Delicious Pizza"
-          layout="fill"
-          className="object-contain" // Use Tailwind CSS class for objectFit
+          fill
+          sizes="(max-width: 768px) 100vw, 
+           (max-width: 1200px) 50vw, 
+           33vw"
+          className="object-contain -z-10" // Tailwind CSS class
+          priority
         />
       </div>
     </section>

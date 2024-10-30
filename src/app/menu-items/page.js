@@ -21,10 +21,18 @@ export default function MenuItemsPage() {
 
   if (loading) {
     return (
-      <div className="text-center" style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "60vh" }}>
+      <div
+        className="text-center"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "60vh",
+        }}
+      >
         <Loader />
       </div>
-    )
+    );
   }
 
   if (!data.admin) {
@@ -50,7 +58,13 @@ export default function MenuItemsPage() {
                 className="bg-gray-300 rounded-lg p-4"
               >
                 <div className="relative max-w-[150px]">
-                  <Image src={item.image} className="rounded-md" width={200} height={200} alt={'item'}/>
+                  <Image
+                    src={item.image}
+                    className="rounded-md w-full h-auto" // Tailwind CSS for full width and auto height
+                    width={200}
+                    height={200}
+                    alt="item"
+                  />
                 </div>
                 <div className="text-center text-gray-500">{item.name}</div>
               </Link>

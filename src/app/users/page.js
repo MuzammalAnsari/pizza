@@ -12,12 +12,22 @@ export default function UserPage() {
   const { loading, data } = useProfile();
 
   useEffect(() => {
-    fetch("/api/users").then((response) => {
-      response.json().then((users) => {
-        setUsers(users);
-      });
-    });
+    fetchUsers()
   }, []);
+
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch('/api/users');
+      console.log('Response:', response); 
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const usersData = await response.json();
+      setUsers(usersData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   if (loading) {
     return (
@@ -45,7 +55,7 @@ export default function UserPage() {
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4 grow">
                   <div className="text-gray-900">
                     {!!user.name && <span className="">{user.name}</span>}
-                    {!user.name && <span className="italic ps-4">No name</span>}
+                    {!user.name && <span className="italic">No name</span>}
                   </div>
                   <span className="text-gray-500">{user.email}</span>
                 </div>

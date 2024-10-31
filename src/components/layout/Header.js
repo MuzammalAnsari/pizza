@@ -2,10 +2,11 @@
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import { useContext, useState } from "react";
-import { usePathname } from "next/navigation"; // Import the hook
+import { usePathname } from "next/navigation";
 import { cartContext } from "../AppContext";
 import ShoppingCart from "../icons/ShoppingCart";
 import Bars2 from "../icons/Bars2";
+import './header.css'; // Import the external CSS
 
 function AuthLinks({ status, userName }) {
   if (status === "authenticated") {
@@ -43,9 +44,14 @@ export default function Header() {
   const userName = data?.user?.name?.split(" ")[0] || data?.user?.email;
   const { cartProducts } = useContext(cartContext);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
-  const pathname = usePathname(); // Get the current path
+  const pathname = usePathname();
 
-  const isActive = (path) => pathname === path ? "bg-primary rounded-full text-white px-8 py-2" : "";
+  // State to manage the active link
+  const [activeLink, setActiveLink] = useState(pathname);
+
+  const handleLinkClick = (path) => {
+    setActiveLink(path);
+  };
 
   return (
     <header className="p-4 bg-background/50 sticky top-0 backdrop-blur border-b z-1">
@@ -77,9 +83,9 @@ export default function Header() {
           onClick={() => setMobileNavOpen(false)}
           className="md:hidden p-4 bg-gray-200 rounded-lg mt-2 flex flex-col gap-2 text-center"
         >
-          <Link href="/" className={isActive("/")}>Home</Link>
-          <Link href="/about" className={isActive("/about")}>About</Link>
-          <Link href="/contact" className={isActive("/contact")}>Contact</Link>
+          <Link href="/" onClick={() => handleLinkClick("/")}>Home</Link>
+          <Link href="/about" onClick={() => handleLinkClick("/about")}>About</Link>
+          <Link href="/contact" onClick={() => handleLinkClick("/contact")}>Contact</Link>
           <AuthLinks status={status} userName={userName} />
         </div>
       )}
@@ -87,12 +93,12 @@ export default function Header() {
       {/* Desktop Header */}
       <div className="hidden md:flex items-center justify-between">
         <nav className="flex items-center gap-8 text-gray-500 font-semibold">
-          <Link href="/" className="text-primary font-semibold text-2xl">
+          <Link href="/" className={`text-primary font-semibold text-2xl`}>
             Muzi Food
           </Link>
-          <Link href="/" className={isActive("/")}>Home</Link>
-          <Link href="/about" className={isActive("/about")}>About</Link>
-          <Link href="/contact" className={isActive("/contact")}>Contact</Link>
+          <Link href="/" onClick={() => handleLinkClick("/")} className={activeLink === "/" ? "active" : ""}>Home</Link>
+          <Link href="/about" onClick={() => handleLinkClick("/about")} className={activeLink === "/about" ? "active" : ""}>About</Link>
+          <Link href="/contact" onClick={() => handleLinkClick("/contact")} className={activeLink === "/contact" ? "active" : ""}>Contact</Link>
         </nav>
         <nav className="flex items-center gap-4 text-gray-500 font-semibold">
           <AuthLinks status={status} userName={userName} />

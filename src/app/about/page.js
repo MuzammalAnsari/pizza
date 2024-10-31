@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Page() {
   return (
     <div className="mt-8">
@@ -26,7 +28,13 @@ export default function Page() {
         </section>
         <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-white shadow-md rounded-lg p-6">
-            {/* <img src="https://www.example.com/pizza1.png" alt="Delicious Pizza" className="w-full h-48 object-cover rounded-md mb-4"> */}
+            <Image
+              src="/aboutPic1.jpg"
+              alt="Delicious Pizza"
+              width={500} // Specify the width in pixels
+              height={300} // Specify the height in pixels
+              className="w-full h-48 object-cover rounded-md mb-4"
+            />
             <h3 className="text-xl font-bold mb-2">Our Ingredients</h3>
             <p>
               We use only the freshest ingredients to make our pizzas. From the
@@ -35,7 +43,14 @@ export default function Page() {
             </p>
           </div>
           <div className="bg-white shadow-md rounded-lg p-6">
-            {/* <img src="https://www.example.com/pizza2.png" alt="Pizza Oven" className="w-full h-48 object-cover rounded-md mb-4"> */}
+            <Image
+              src="/aboutPic2.jpg"
+              alt="Pizza Oven"
+              width={500} // Specify the width in pixels
+              height={300} // Specify the height in pixels
+              className="w-full h-48 object-cover rounded-md mb-4"
+            />
+
             <h3 className="text-xl font-bold mb-2">Our Oven</h3>
             <p>
               Our state-of-the-art oven ensures that every pizza is baked to

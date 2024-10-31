@@ -10,6 +10,7 @@ export default function OrderPage() {
   const [orders, setOrders] = useState([]);
   const [loadingOrders, setLoadingOrders] = useState(true);
   const { loading, data: profile } = useProfile();
+  const [error, setError] = useState(null);
 
 
   useEffect(() => {
@@ -17,14 +18,20 @@ export default function OrderPage() {
   }, []);
 
 
-  function fetchOrders() {
+  async function fetchOrders() {
     setLoadingOrders(true);
-    fetch('/api/orders').then(res => {
-      res.json().then(orders => {
-        setOrders(orders.reverse());
-        setLoadingOrders(false);
-      })
-    })
+    try {
+      const response = await fetch('/api/orders');
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const ordersData = await response.json();
+      setOrders(ordersData.reverse());
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoadingOrders(false);
+    }
   }
 
 

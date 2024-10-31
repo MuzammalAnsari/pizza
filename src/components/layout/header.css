@@ -1,0 +1,39 @@
+nav a {
+    position: relative;
+    text-decoration: none; /* Remove default underline */
+    color: gray; /* Default color */
+    padding: 10px; /* Add padding for better click area */
+  }
+  
+  nav a.active {
+    color: rgb(255, 0, 0); /* Active link color */
+  }
+  
+  nav a.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px; /* Border height */
+    width: 100%; /* Full width */
+    background-color: rgb(255, 0, 0); /* Border color */
+    transform: scaleX(1); /* Full scale */
+    transition: transform 0.5s ease; /* Transition effect */
+  }
+  
+  nav a:not(.active):hover::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px; /* Border height */
+    width: 100%; /* Full width */
+    background-color: rgb(255, 0, 0); /* Border color */
+    transform: scaleX(0); /* Initial scale */
+    transition: transform 0.5s ease; /* Transition effect */
+  }
+  
+  nav a:not(.active):hover {
+    color: rgb(239, 6, 6); /* Change text color on hover */
+  }
+  
